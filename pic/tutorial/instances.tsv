@@ -1,0 +1,22 @@
+instanceID	dataIDs	label_set	non_label
+pair_0_(1 Peter 4:7)	18_(1 Peter 4:7),19_(1 Peter 4:7)	1,2,3,4	-
+pair_1_(1 Peter 4:7)	16_(1 Peter 4:7),17_(1 Peter 4:7)	1,2,3,4	-
+pair_2_(1 Peter 4:7)	16_(1 Peter 4:7),19_(1 Peter 4:7)	1,2,3,4	-
+pair_0_(Job 1:1)	13_(Job 1:1),14_(Job 1:1)	1,2,3,4	-
+pair_1_(Job 1:1)	14_(Job 1:1),15_(Job 1:1)	1,2,3,4	-
+pair_2_(Job 1:1)	12_(Job 1:1),13_(Job 1:1)	1,2,3,4	-
+pair_0_(Luke 24:15)	1_(Luke 24:15),2_(Luke 24:15)	1,2,3,4	-
+pair_1_(Luke 24:15)	0_(Luke 24:15),3_(Luke 24:15)	1,2,3,4	-
+pair_2_(Luke 24:15)	0_(Luke 24:15),2_(Luke 24:15)	1,2,3,4	-
+pair_0_(Matthew 5:9)	21_(Matthew 5:9),23_(Matthew 5:9)	1,2,3,4	-
+pair_1_(Matthew 5:9)	22_(Matthew 5:9),23_(Matthew 5:9)	1,2,3,4	-
+pair_2_(Matthew 5:9)	21_(Matthew 5:9),25_(Matthew 5:9)	1,2,3,4	-
+pair_0_(Proverbs 1:8)	7_(Proverbs 1:8),8_(Proverbs 1:8)	1,2,3,4	-
+pair_1_(Proverbs 1:8)	6_(Proverbs 1:8),8_(Proverbs 1:8)	1,2,3,4	-
+pair_2_(Proverbs 1:8)	6_(Proverbs 1:8),7_(Proverbs 1:8)	1,2,3,4	-
+pair_0_(Revelation 12:3)	4_(Revelation 12:3),5_(Revelation 12:3)	1,2,3,4	-
+pair_0_(Song of songs 8:6)	10_(Song of songs 8:6),9_(Song of songs 8:6)	1,2,3,4	-
+pair_1_(Song of songs 8:6)	11_(Song of songs 8:6),9_(Song of songs 8:6)	1,2,3,4	-
+pair_0_(Zechariah 10:1)	27_(Zechariah 10:1),28_(Zechariah 10:1)	1,2,3,4	-
+pair_1_(Zechariah 10:1)	28_(Zechariah 10:1),29_(Zechariah 10:1)	1,2,3,4	-
+pair_2_(Zechariah 10:1)	27_(Zechariah 10:1),29_(Zechariah 10:1)	1,2,3,4	-
