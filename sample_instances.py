@@ -25,14 +25,24 @@ def sample_instances(usesIDs:list, k: int) -> list:
 
     return random.sample(list(all_pairs), k)
 
-def store(data: dict, filename: str) -> None:
+def store(data: dict, filename: str, split_target: bool = True) -> None:
     '''Store data in tsv files'''
 
-    for u in data:
-        Path(f'pic/{u.replace(":", " ")}/').mkdir(parents=True, exist_ok=True)
-        with open(f'pic/{u.replace(":", " ")}/{filename}', mode='w', encoding='utf-8') as f:
-            data[u] = data[u][:-1] + [data[u][-1][:-1]] # remove last '\n'
-            f.writelines(data[u])
+    if split_target:
+        for u in data:
+            Path(f'pic/{u.replace(":", " ")}/').mkdir(parents=True, exist_ok=True)
+            with open(f'pic/{u.replace(":", " ")}/{filename}', mode='w', encoding='utf-8') as f:
+                data[u] = data[u][:-1] + [data[u][-1][:-1]] # remove last '\n'
+                f.writelines(data[u])
+    else:
+        keys = list(data.keys())
+        full_data = data[keys[0]]
+
+        for u in keys[1:]:
+            full_data.extend(data[u][1:-1] + [data[u][-1][:-1]])  # remove last '\n'
+
+        with open(f'pic/{filename}', mode='w', encoding='utf-8') as f:
+            f.writelines(full_data)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Random sampling', add_help=True)
@@ -55,7 +65,8 @@ if __name__ == '__main__':
             uses[dict_['quote_id']].append(uses_header)
         uses[dict_['quote_id']].append(f"{dict_['id']}\t{dict_['sentence']}\t{dict_['start']}:{dict_['end']}\t0:{len(dict_['sentence'])}\t{dict_['quote']}\n")
 
-    store(uses, "uses.tsv")
+    store(uses, "uses.tsv", split_target=True)
+    store(uses, "uses.tsv", split_target=False)
 
     # create instances.tsv file for each quotation
     instances_header = "instanceID\tdataIDs\tlabel_set\tnon_label\n"
@@ -70,4 +81,5 @@ if __name__ == '__main__':
         for i in range(args.sample_size):
             instances[u].append(f'{instanceID[i]}\t{dataIDs[i]}\t{label_set[i]}\t{non_label[i]}\n')
 
-    store(instances, "instances.tsv")
+    store(instances, "instances.tsv", split_target=True)
+    store(instances, "instances.tsv", split_target=False)
