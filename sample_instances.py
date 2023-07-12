@@ -25,10 +25,10 @@ def sample_instances(usesIDs:list, k: int) -> list:
 
     return random.sample(list(all_pairs), k)
 
-def store(data: dict, filename: str, split_target: bool = True) -> None:
+def store(data: dict, filename: str, split_targets: bool = True) -> None:
     '''Store data in tsv files'''
 
-    if split_target:
+    if split_targets:
         for u in data:
             Path(f'pic/{u.replace(":", " ")}/').mkdir(parents=True, exist_ok=True)
             with open(f'pic/{u.replace(":", " ")}/{filename}', mode='w', encoding='utf-8') as f:
@@ -65,8 +65,8 @@ if __name__ == '__main__':
             uses[dict_['quote_id']].append(uses_header)
         uses[dict_['quote_id']].append(f"{dict_['id']}\t{dict_['sentence']}\t{dict_['start']}:{dict_['end']}\t0:{len(dict_['sentence'])}\t{dict_['quote']}\n")
 
-    store(uses, "uses.tsv", split_target=True)
-    store(uses, "uses.tsv", split_target=False)
+    store(uses, "uses.tsv", split_targets=True)
+    store(uses, "uses.tsv", split_targets=False)
 
     # create instances.tsv file for each quotation
     instances_header = "instanceID\tdataIDs\tlabel_set\tnon_label\n"
@@ -81,5 +81,5 @@ if __name__ == '__main__':
         for i in range(args.sample_size):
             instances[u].append(f'{instanceID[i]}\t{dataIDs[i]}\t{label_set[i]}\t{non_label[i]}\n')
 
-    store(instances, "instances.tsv", split_target=True)
-    store(instances, "instances.tsv", split_target=False)
+    store(instances, "instances.tsv", split_targets=True)
+    store(instances, "instances.tsv", split_targets=False)
