@@ -15,12 +15,18 @@ def sample_instances(usesIDs:list, k: int) -> list:
         k(int): number of instances to be annotated
     Returns:
         list of instances'''
+
+    # emulate two time corpora
+    usesIDs_C1, usesIDs_C2 = usesIDs[:len(usesIDs)//2], usesIDs[len(usesIDs)//2:]
+
     all_pairs = set()
     for pair in combinations(usesIDs, 2):
         id1, id2 = pair
-        if id1 < id2:
+
+        # exclude pair of records from the same period
+        if id1 in usesIDs_C1 and id2 in usesIDs_C2:
             all_pairs.add(",".join([id1, id2]))
-        elif id1 > id2: # exclude pair of records with the same id
+        elif id2 in usesIDs_C1 and id1 in usesIDs_C2:
             all_pairs.add(",".join([id2, id1]))
 
     return random.sample(list(all_pairs), min(k, len(all_pairs)))
@@ -60,7 +66,12 @@ if __name__ == '__main__':
     # create uses.tsv file for each quotation
     uses = defaultdict(list)
     uses_header = "dataID\tcontext\tindices_target_token\tindices_target_sentence\tlemma\n"
-    for line in open(filename, mode='r', encoding='utf-8').readlines():
+    lines = open(filename, mode='r', encoding='utf-8').readlines()
+
+    # shuffle uses
+    random.shuffle(lines)
+
+    for line in lines:
         line = line.strip()
         dict_ = json.loads(line)
         if not dict_['quote_id'] in uses:
