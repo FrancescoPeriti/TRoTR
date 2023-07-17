@@ -50,7 +50,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Random sampling', add_help=True)
     parser.add_argument('-k', '--sample_size',
                         type=int,
-                        default=3,
+                        default=70,
                         help='Number of pairs to be annotated per quotation')
     args = parser.parse_args()
 
