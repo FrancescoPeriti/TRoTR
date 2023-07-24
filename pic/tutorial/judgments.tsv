@@ -1,4 +1,4 @@
-instanceID	label	comment annotator
+instanceID	label	comment	annotator
 pair_0_(Job 1:1)	1	gold_annotator
 pair_2_(Job 1:1)	4	gold_annotator
 pair_1_(Job 1:1)	1	gold_annotator
