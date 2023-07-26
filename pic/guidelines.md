@@ -16,10 +16,10 @@ Because language is often ambiguous, it is important that you first read each te
 The scale that you will be using for your judgments ranges from 1 (the two contexts of the phrase have completely unrelated topics and share almost no content, information, or intention) to 4 (the two contexts of the phrase have completely the same topic and exhibit almost no variation in content, information, or intention). This four-point scale is shown below.
 
 
-- 4 Same topic - _almost no variation in content, information, or intention_
+- 4 Same topic - _(almost) no variation in content, information, or intention_
 - 3 Same topic - _some variation in content, information, or intention_
 - 2 Different topic - _some shared content, information, or intention_
-- 1 Different topic - _almost no shared content, information, or intention_
+- 1 Different topic - _(almost) no shared content, information, or intention_
 
 - \- Can't decide
 
@@ -38,9 +38,9 @@ The two contexts of the targer phrase in **Example A** are judged to be addressi
 |--------|---------|
 |In the midst of life's storms, when fear and _uncertainty surround us_, let us remember to trust in _God_. Remember his word: **fear not, for I am with you**; _do not be dismayed, for I am your God. I will strengthen you and help you_.|Sometimes, I just _feel like giving up_... But the _Lord_ gives me _strength to keep going_. **So do not fear, for I am with you**; _Be not dismayed, for I am your God. I will strengthen you, Yes, I will help you, I will uphold you with My righteous right hand_.|
 
-[**4-Same Topic: _almost no variation_**, 3-Same Topic: _some variation_, 2-Different Topic: _some shared content_, 1-Different Topic: _almost no shared content_]
+[**4-Same Topic: _(almost) no variation_**, 3-Same Topic: _some variation_, 2-Different Topic: _some shared content_, 1-Different Topic: _(almost) no shared content_]
 
-Example A: Judgment 4 (Same Topic: _almost no variation in content, information, or intention_)
+Example A: Judgment 4 (Same Topic: _(almost) no variation in content, information, or intention_)
 
 ***
 
@@ -50,7 +50,7 @@ In contrast to the previous example, the two contexts of the targer phrase in **
 |--------|---------|
 |**The lord is my shepherd** _I want_ $500,000,000.|**The lord is my shepherd**, _i want_ to graduate from school😭|
 
-[4-Same Topic: _almost no variation_, **3-Same Topic: _some variation_**, 2-Different Topic: _some shared content_, 1-Different Topic: _almost no shared content_]
+[4-Same Topic: _(almost) no variation_, **3-Same Topic: _some variation_**, 2-Different Topic: _some shared content_, 1-Different Topic: _(almost) no shared content_]
 
 Example B: Judgment 3 (Same Topic: _some variation in content, information, or intention_)
 
@@ -62,7 +62,7 @@ In **Example C**, the two contexts of the target phrase address different topics
 |--------|---------|
 |**For everything there is a season**, and _a time for every matter under heaven_. As we embrace the weekend, let's remember to strike a balance between work and rest, allowing ourselves _time_ to rejuvenate and find inspiration in the world around us.|**For everything there is a season**, _a time for every activity under heaven_. I don’t know about you, but I constantly look at my watch throughout the day. What _time_ is it? What _time_ are we supposed to be there? How much _time_ will it take?|
 
-[4-Same Topic: _almost no variation_, 3-Same Topic: _some variation_, **2-Different Topic: _some shared content_**, 1-Different Topic: _almost no shared content_]
+[4-Same Topic: _(almost) no variation_, 3-Same Topic: _some variation_, **2-Different Topic: _some shared content_**, 1-Different Topic: _(almost) no shared content_]
 
 Example C: Judgment 2 (Different Topic: _some shared content, information, or intention_)
 
@@ -74,9 +74,9 @@ A rating of 1 is assigned to two contexts of a target phrase that are entirely u
 |--------|---------|
 |At a large Crimean event today Putin quoted the Bible to defend the special military operation in Ukraine which has killed thousands and displaced millions. His words **Greater love has no one than this: to lay down one's life for one's friends**. And people were cheering him. Madness!!!|It's the wonderful pride month!! ❤️🧡💛💚💙💜 Honestly pride is everyday! Love is love don't forget I love you. Remember this!: My command is this: Love each other as I have loved you. **Greater love has no one than this: to lay down one's life for one's friends**|
 
-[4-Same Topic: _almost no variation_, 3-Same Topic: _some variation_, 2-Different Topic: _some shared content_, **1-Different Topic: _almost no shared content_**]
+[4-Same Topic: _(almost) no variation_, 3-Same Topic: _some variation_, 2-Different Topic: _some shared content_, **1-Different Topic: _(almost) no shared content_**]
 
-Example D: Judgment 1 (Different Topic: _almost no shared content, information, or intention_)
+Example D: Judgment 1 (Different Topic: _(almost) no shared content, information, or intention_)
 
 ***
 
