@@ -38,7 +38,7 @@ We now consider some evaluation examples to illustrate the different degrees of 
 
 [**4-Same Topic: _almost no variation_**, 3-Same Topic: _some variation_, 2-Different Topic: _some shared content_, 1-Different Topic: _almost no shared content_]
 
-Example A: Judgment 4 (Same Topic: _almost no variation_)
+Example A: Judgment 4 (Same Topic: _almost no variation in content, information, or intention_)
 
 The two contexts of the targer phrase in **Example A** are judged to be addressing the same topic (rating: 4) since there is almost no variation in both contexts, both referring to the reliance on a higher power for strength and support during challenging times.
 ***
@@ -51,7 +51,7 @@ In contrast to the previous example, the two contexts of the targer phrase in **
 
 [4-Same Topic: _almost no variation_, **3-Same Topic: _some variation_**, 2-Different Topic: _some shared content_, 1-Different Topic: _almost no shared content_]
 
-Example B: Judgment 3 (Same Topic: _some variation_)
+Example B: Judgment 3 (Same Topic: _some variation in content, information, or intention_)
 
 ***
 In **Example C**, the two contexts of the target phrase address different topics but still share some content and information, thus rating 2 on the scale. The topic of the first context is the concept of balance between work and rest, while the topic of the second context is concern.
@@ -62,7 +62,7 @@ In **Example C**, the two contexts of the target phrase address different topics
 
 [4-Same Topic: _almost no variation_, 3-Same Topic: _some variation_, **2-Different Topic: _some shared content_**, 1-Different Topic: _almost no shared content_]
 
-Example C: Judgment 2 (Different Topic: _some shared content_)
+Example C: Judgment 2 (Different Topic: _some shared content, information, or intention_)
 
 
 ***
@@ -74,7 +74,7 @@ A rating of 1 is assigned to two contexts of a target phrase that are entirely u
 
 [4-Same Topic: _almost no variation_, 3-Same Topic: _some variation_, 2-Different Topic: _some shared content_, **1-Different Topic: _almost no shared content_**]
 
-Example D: Judgment 1 (Different Topic: _almost no shared content_)
+Example D: Judgment 1 (Different Topic: _almost no shared content, information, or intention_)
 
 ***
 
