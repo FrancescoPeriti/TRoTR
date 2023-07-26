@@ -32,6 +32,8 @@ Note that there are no right or wrong answers in this task, so please provide yo
 We now consider some evaluation examples to illustrate the different degrees of semantic similarity you might encounter in annotation. As mentioned earlier, please disregard the effect of the target phrase and focus solely on the provided contexts. Please note that these are only examples, and you should always give your subjective opinion. In the following context pairs, we will highlight the target phrases in bold and indicate commonalities in content, information, or intention using italics.
 
 ***
+The two contexts of the targer phrase in **Example A** are judged to be addressing the same topic (rating: 4) since there is almost no variation in both contexts, both referring to the reliance on a higher power for strength and support during challenging times.
+
 |Context 1 | Context 2 |
 |--------|---------|
 |In the midst of life's storms, when fear and _uncertainty surround us_, let us remember to trust in _God_. Remember his word: **fear not, for I am with you**; _do not be dismayed, for I am your God. I will strengthen you and help you_.|Sometimes, I just _feel like giving up_... But the _Lord_ gives me _strength to keep going_. **So do not fear, for I am with you**; _Be not dismayed, for I am your God. I will strengthen you, Yes, I will help you, I will uphold you with My righteous right hand_.|
@@ -40,7 +42,6 @@ We now consider some evaluation examples to illustrate the different degrees of 
 
 Example A: Judgment 4 (Same Topic: _almost no variation in content, information, or intention_)
 
-The two contexts of the targer phrase in **Example A** are judged to be addressing the same topic (rating: 4) since there is almost no variation in both contexts, both referring to the reliance on a higher power for strength and support during challenging times.
 ***
 
 In contrast to the previous example, the two contexts of the targer phrase in **Example B** are judged to be addressing the same topic (rating: 3), i.e., wishes; however, there are variations in content regarding the specific desires expressed (financial vs. academic).
@@ -54,6 +55,7 @@ In contrast to the previous example, the two contexts of the targer phrase in **
 Example B: Judgment 3 (Same Topic: _some variation in content, information, or intention_)
 
 ***
+
 In **Example C**, the two contexts of the target phrase address different topics but still share some content and information, thus rating 2 on the scale. The topic of the first context is the concept of balance between work and rest, while the topic of the second context is concern.
 
 |Context 1 | Context 2 |
@@ -64,8 +66,8 @@ In **Example C**, the two contexts of the target phrase address different topics
 
 Example C: Judgment 2 (Different Topic: _some shared content, information, or intention_)
 
-
 ***
+
 A rating of 1 is assigned to two contexts of a target phrase that are entirely unrelated in the topics they address, with no shared content, information, or intention, as seen in the case of the target phrase in **Example D**. Note that this pair of contexts is more different than the two contexts in **Example C**.
 
 |Context 1 | Context 2 |
