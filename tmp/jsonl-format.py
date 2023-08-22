@@ -45,6 +45,11 @@ if __name__ == '__main__':
             dict_['start'] = dict_['sentence'].lower().find(quote)
             dict_['end'] = dict_['start'] + len(quote)
 
+        if dict_['start'] == -1:
+            print('There is an error with this line:\n')
+            print(line)
+            raise Exception
+      
         dict_['id'] = f'{idx}_{dict_["quote_id"]}'
         idx+=1
         records.append(json.dumps({k: dict_[k] for k in keys})+'\n')
