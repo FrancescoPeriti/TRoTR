@@ -9,6 +9,9 @@ parser.add_argument('-i', '--input',
 parser.add_argument('-o', '--output',
                     type=str,
                     help='output corpus')
+parser.add_argument('-m', '--marker',
+                    type=str,
+                    help='corpus marker')
 args = parser.parse_args()
 
 
@@ -50,7 +53,7 @@ if __name__ == '__main__':
             print(line)
             raise Exception
       
-        dict_['id'] = f'{idx}_{dict_["quote_id"]}'
+        dict_['id'] = f'{idx}_{dict_["quote_id"]}' + '-' + args.marker
         idx+=1
         records.append(json.dumps({k: dict_[k] for k in keys})+'\n')
 
