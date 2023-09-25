@@ -1,5 +1,5 @@
-# Phrase-in-Context (PiC)
+# TRoTR: Topic Relatedness of Text Reuse
 
 ```
-python sample_instances.py -k [NUMBER OF INSTANCES PER QUOTATION]
+python random-sample.py
 ```
