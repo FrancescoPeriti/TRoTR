@@ -16,32 +16,20 @@ def sample_instances(usesIDs:list, k: int) -> list:
     Returns:
         list of instances'''
 
-    # emulate two time corpora
-    usesIDs_C1, usesIDs_C2 = usesIDs[:len(usesIDs)//2], usesIDs[len(usesIDs)//2:]
-
-    all_pairs = set()
-    for pair in combinations(usesIDs, 2):
-        id1, id2 = pair
-
-        # exclude pair of records from the same period
-        if id1 in usesIDs_C1 and id2 in usesIDs_C2:
-            all_pairs.add(",".join([id1, id2]))
-        elif id2 in usesIDs_C1 and id1 in usesIDs_C2:
-            all_pairs.add(",".join([id2, id1]))
-
+    all_pairs = set(list(combinations(usesIDs, 2)))
     return random.sample(list(all_pairs), min(k, len(all_pairs)))
 
 def store(data: dict, filename: str) -> None:
     '''Store data in tsv files'''
     for u in data:
-        Path(f'pic/{u.replace(":", " ")}/').mkdir(parents=True, exist_ok=True)
-        with open(f'pic/{u.replace(":", " ")}/{filename}', mode='w', encoding='utf-8') as f:
+        Path(f'data/{u.replace(":", " ")}/').mkdir(parents=True, exist_ok=True)
+        with open(f'data/{u.replace(":", " ")}/{filename}', mode='w', encoding='utf-8') as f:
             data[u] = data[u][:-1] + [data[u][-1][:-1]] # remove last '\n'
             f.writelines(data[u])
 
 def aggregate(filename: str) -> None:
     full_data = list()
-    for i, f in enumerate(Path(f'pic/').glob(f'*/{filename}')):
+    for i, f in enumerate(Path(f'data/').glob(f'*/{filename}')):
         with open(f, mode='r', encoding='utf-8') as f:
             data = f.readlines()
             if i != 0:
@@ -49,19 +37,19 @@ def aggregate(filename: str) -> None:
             data = data[:-1] + [data[-1]+'\n']
             full_data.extend(data)
 
-    with open(f'pic/{filename}', mode='w', encoding='utf-8') as f:
+    with open(f'data/{filename}', mode='w', encoding='utf-8') as f:
         f.writelines(full_data)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Random sampling', add_help=True)
     parser.add_argument('-k', '--sample_size',
                         type=int,
-                        default=70,
+                        default=150,
                         help='Number of pairs to be annotated per quotation')
     args = parser.parse_args()
 
     # tweet collection
-    filename = 'quotations.jsonl'
+    filename = 'corpus.jsonl'
 
     # create uses.tsv file for each quotation
     uses = defaultdict(list)
@@ -92,7 +80,7 @@ if __name__ == '__main__':
         non_label = ["-"]*len(dataIDs)
         instances[u].append(instances_header)
         for i in range(len(dataIDs)):
-            instances[u].append(f'{instanceID[i]}\t{dataIDs[i]}\t{label_set[i]}\t{non_label[i]}\n')
+            instances[u].append(f'{instanceID[i]}\t{",".join(dataIDs[i])}\t{label_set[i]}\t{non_label[i]}\n')
 
     store(instances, "instances.tsv")
     aggregate("instances.tsv")
