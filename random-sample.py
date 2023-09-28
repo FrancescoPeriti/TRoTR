@@ -23,7 +23,7 @@ def store(data: dict, filename: str) -> None:
     '''Store data in tsv files'''
     for u in data:
         Path(f'data/{u.replace(":", " ")}/').mkdir(parents=True, exist_ok=True)
-        with open(f'data/{u.replace(":", " ")}/{filename}', mode='w', encoding='utf-8') as f:
+        with open(f'TRoTR/data/{u.replace(":", " ")}/{filename}', mode='w', encoding='utf-8') as f:
             data[u] = data[u][:-1] + [data[u][-1][:-1]] # remove last '\n'
             f.writelines(data[u])
 
@@ -37,7 +37,7 @@ def aggregate(filename: str) -> None:
             data = data[:-1] + [data[-1]+'\n']
             full_data.extend(data)
 
-    with open(f'data/{filename}', mode='w', encoding='utf-8') as f:
+    with open(f'TRoTR/data/{filename}', mode='w', encoding='utf-8') as f:
         f.writelines(full_data)
 
 if __name__ == '__main__':
