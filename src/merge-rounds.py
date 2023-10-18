@@ -20,8 +20,10 @@ def merge_rounds(folder):
 
 if __name__ == '__main__':
 
-    rounds = merge_rounds('rounds')
-    judgments = merge_rounds('judgments')
+    rounds = merge_rounds('TRoTR/rounds')
+    judgments = merge_rounds('TRoTR/judgments')
 
-    open('rounds/TRoTR.tsv', mode='w', encoding='utf-8').writelines(rounds)
-    open('judgments/TRoTR.tsv', mode='w', encoding='utf-8').writelines(judgments)
+    open('TRoTR/rounds/TRoTR.tsv', mode='w', encoding='utf-8').writelines(rounds)
+    open('TRoTR/judgments/TRoTR.tsv', mode='w', encoding='utf-8').writelines(judgments)
+
+

@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
-def load_uses(filename='data/uses.tsv', sep='\t'):
+def load_uses(filename='TRoTR/data/uses.tsv', sep='\t'):
     tmp = list()
     with open(filename, mode='r', encoding='utf-8') as f:
         columns = f.readline().rstrip().split(sep)
@@ -15,7 +15,7 @@ def load_uses(filename='data/uses.tsv', sep='\t'):
 
 def load_instances(filename, dirname='rounds', sep='\t'):
     tmp = list()
-    with open(f'{dirname}/{filename}', mode='r', encoding='utf-8') as f:
+    with open(f'TRoTR/{dirname}/{filename}', mode='r', encoding='utf-8') as f:
         columns = f.readline().rstrip().split(sep) + ['dataID1', 'dataID2']
         for line in f.readlines():
             tmp_record = dict(zip(columns, line[:-1].split('\t')))
@@ -27,7 +27,7 @@ def load_instances(filename, dirname='rounds', sep='\t'):
 
 def load_judgments(filename, dirname='judgments', sep='\t'):
     tmp = list()
-    with open(f'{dirname}/{filename}', mode='r', encoding='utf-8') as f:
+    with open(f'TRoTR/{dirname}/{filename}', mode='r', encoding='utf-8') as f:
         columns = f.readline().rstrip().split(sep)
         for line in f.readlines():
             tmp_record = dict(zip(columns, line.rstrip().split(sep)))
@@ -83,11 +83,11 @@ if __name__ == '__main__':
                         help='Convert file from tsv to jsonl format')
     parser.add_argument('-s', '--subtask',
                         type=str,
-                        default='ranking',
+                        default='binary',
                         help='Binary or ranking')
     parser.add_argument('-m', '--mode',
                         type=str,
-                        default='pair-by-line',
+                        default='line-by-line',
                         help='Specify the context format: "line-by-line" for one context per line, or "pair-by-line" for two contexts per line')
     args = parser.parse_args()
 
@@ -106,11 +106,9 @@ if __name__ == '__main__':
     del df['annotator']
     df = df.groupby([c for c in df.columns.values if c != 'label']).mean().reset_index()
 
-
-
     if args.subtask == 'binary':
-        df = df[(df.label >= 3.5) | (df.label <= 1.5)].reset_index(drop=True)
-        df['label'] = [int(label >= 3.5) for label in df.label.values]
+        #df = df[(df.label >= 3.5) | (df.label <= 1.5)].reset_index(drop=True)
+        df['label'] = [int(label >= 3) for label in df.label.values]
 
     df = df.sample(frac=1, random_state=42)
     train, dev, test = np.split(df, [int(.6*len(df)), int(.8*len(df))])

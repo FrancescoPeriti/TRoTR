@@ -22,14 +22,14 @@ def sample_instances(usesIDs:list, k: int) -> list:
 def store(data: dict, filename: str) -> None:
     '''Store data in tsv files'''
     for u in data:
-        Path(f'data/{u.replace(":", " ")}/').mkdir(parents=True, exist_ok=True)
+        Path(f'TRoTR/data/{u.replace(":", " ")}/').mkdir(parents=True, exist_ok=True)
         with open(f'TRoTR/data/{u.replace(":", " ")}/{filename}', mode='w', encoding='utf-8') as f:
             data[u] = data[u][:-1] + [data[u][-1][:-1]] # remove last '\n'
             f.writelines(data[u])
 
 def aggregate(filename: str) -> None:
     full_data = list()
-    for i, f in enumerate(Path(f'data/').glob(f'*/{filename}')):
+    for i, f in enumerate(Path(f'TRoTR/data/').glob(f'*/{filename}')):
         with open(f, mode='r', encoding='utf-8') as f:
             data = f.readlines()
             if i != 0:
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # tweet collection
-    filename = 'corpus.jsonl'
+    filename = 'TRoTR/raw_data.jsonl'
 
     # create uses.tsv file for each quotation
     uses = defaultdict(list)
