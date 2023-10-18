@@ -9,10 +9,7 @@ from scipy.stats import spearmanr, pearsonr
 from sklearn.metrics import f1_score, roc_curve
 
 from datasets import Dataset
-from transformers import BertTokenizer, BertForNextSentencePrediction, logging as transformers_logging
-
-# avoid boring logging
-transformers_logging.set_verbosity_error()
+from sentence_transformers import CrossEncoder
 
 import argparse
 
@@ -41,60 +38,10 @@ def set_threshold(y_true, y):
 # Parameters
 model_name = args.model
 batch_size = args.batch_size
-device = torch.device(args.device)
+device = args.device
 
-# BERT model
-tokenizer = BertTokenizer.from_pretrained(model_name)
-model = BertForNextSentencePrediction.from_pretrained(model_name)
-model.to(device)
-model.eval()
-
-
-def tokenize(examples):
-    """Tokenization function"""
-    return tokenizer([e for i, e in enumerate(examples["context"]) if i % 2 != 0],
-                     [e for i, e in enumerate(examples["context"]) if i % 2 == 0],
-                     return_tensors='pt',
-                     padding="max_length",
-                     max_length=tokenizer.model_max_length,
-                     truncation=True).to(device)
-
-
-def encode(sentences, batch_size):
-    encoding = tokenizer([e for i, e in enumerate(sentences) if i % 2 != 0],
-                         [e for i, e in enumerate(sentences) if i % 2 == 0], return_tensors="pt", padding="max_length",
-                         max_length=tokenizer.model_max_length,
-                         truncation=True).to(device)
-
-    nsp_values = list()
-    num_rows = encoding['input_ids'].shape[0]
-    for i in range(0, num_rows, batch_size):
-        start, end = i, min(i + batch_size, num_rows)
-        num_row_batch = encoding['input_ids'][start:end].shape[0]
-
-        model_input = dict()
-
-        # to device
-        model_input['input_ids'] = encoding['input_ids'][start:end].to(device)
-        model_input['attention_mask'] = encoding['attention_mask'][start:end].to(device)
-
-        # XLM-R doesn't use 'token_type_ids'
-        if 'token_type_ids' in encoding:
-            model_input['token_type_ids'] = encoding['token_type_ids'][start:end].to(device)
-
-        # model prediction
-        with torch.no_grad():
-            model_output = model(**model_input, next_sentence_label=torch.ones((num_row_batch, 1),
-                                                                               dtype=torch.long).to(device),
-                                 target_batch_size=num_row_batch)
-
-        # select the embeddings of a specific target word
-        for j in range(num_row_batch):
-            nsp = model_output.logits[j][0].item()
-            nsp_values.append(nsp)
-
-    return np.array(nsp_values)
-
+# sBERT model
+model = CrossEncoder(model_name, device=device)
 
 # wrapper
 scores = defaultdict(list)
@@ -115,8 +62,10 @@ for data_set in ['train', 'test', 'dev']:
             labels[data_set].append(float(row['label']))
             scores[data_set].append(float(json.loads(lines[i])['label']))
 
-    distances[data_set] = encode(sentences[data_set], batch_size=batch_size)
-    mask_distances[data_set] = encode(mask_sentences[data_set], batch_size=batch_size)
+    distances[data_set] = model.predict([(sentences[data_set][i], sentences[data_set][i + 1])
+                                         for i in range(0, len(sentences[data_set]) - 1, 2)], batch_size=32)
+    mask_distances[data_set] = model.predict([(mask_sentences[data_set][i], mask_sentences[data_set][i + 1])
+                                              for i in range(0, len(mask_sentences[data_set]) - 1, 2)], batch_size=32)
 
 spearman_corr, spearman_pvalue = list(), list()
 pearson_corr, pearson_pvalue = list(), list()
@@ -159,12 +108,12 @@ if not Path(stats_file).is_file():
 else:
     lines = open(stats_file, mode='r', encoding='utf-8').readlines()
 
-lines.append(f'{model_name}_NSP\t' + "\t".join(
+lines.append(f'{model_name}\t' + "\t".join(
     [f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}' for i in
      range(3)]) + f'\t{thr}\n')
-lines.append(f'{model_name}_NSP\t' + "\t".join([
-                                                   f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}'
-                                                   for i in range(3)]) + f'\t{mask_thr}\n')
+lines.append(f'{model_name}\t' + "\t".join([
+    f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}'
+    for i in range(3)]) + f'\t{mask_thr}\n')
 
 with open(stats_file, mode='w', encoding='utf-8') as f:
     f.writelines(lines)
