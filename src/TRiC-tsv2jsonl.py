@@ -119,5 +119,5 @@ if __name__ == '__main__':
         test = split_rows(test)
 
     for k,v in {'train':train, 'dev':dev, 'test':test}.items():
-        Path(f'datasets/{args.mode}').mkdir(parents=True, exist_ok=True)
-        v.to_json(f'datasets/{args.mode}/{k}-{args.subtask}.jsonl', orient='records', lines=True)
+        Path(f'TRoTR/datasets/{args.mode}').mkdir(parents=True, exist_ok=True)
+        v.to_json(f'TRoTR/datasets/{args.mode}/{k}-{args.subtask}.jsonl', orient='records', lines=True)
