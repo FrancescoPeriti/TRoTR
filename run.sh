@@ -1,6 +1,6 @@
 #!/bin/sh
 #SBATCH -A NAISS2023-5-119 -p alvis
-#SBATCH -N 1 --gpus-per-node=A100:1 # We're launching 1 nodes with A100 GPU
+#SBATCH -N 1 --gpus-per-node=A40:1 # We're launching 1 nodes with A100 GPU
 #SBATCH -t 2-00:00:00
 
 batch_size="8"
