@@ -103,7 +103,7 @@ class TRiCModel:
 
             if self.do_validation:
 
-                dev_bar = tqdm(dev_batches, total=len(dev_batches), desc='evaluation DEV ... ', leave=True, positions=0)
+                dev_bar = tqdm(dev_batches, total=len(dev_batches), desc='evaluation DEV ... ', leave=True, position=0)
 
                 truth = []
                 predictions = []
