@@ -9,7 +9,7 @@ from transformers.configuration_utils import PretrainedConfig
 
 from transformers import BertPreTrainedModel
 
-class ClassificationHead(nn.Module):
+class RegressionHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
     def __init__(self, num_classes, input_size):
@@ -32,7 +32,7 @@ class Feature:
         self.example = example
 
 
-class CLSModel(BertPreTrainedModel): #PreTrainedModel):
+class RegModel(BertPreTrainedModel): #PreTrainedModel):
 
     def __init__(self, config: PretrainedConfig):
         super().__init__(config)
@@ -40,7 +40,7 @@ class CLSModel(BertPreTrainedModel): #PreTrainedModel):
         self._tokenizer = AutoTokenizer.from_pretrained(config._name_or_path)
         self._input_size = config.hidden_size
         self._max_seq_len = config.max_position_embeddings
-        self._clf = ClassificationHead(1, self._input_size * 2) # two embeddings will be concatenated
+        self._reg = RegressionHead(1, self._input_size * 2) # two embeddings will be concatenated
         self.init_weights()
 
     def forward(self,
@@ -70,8 +70,8 @@ class CLSModel(BertPreTrainedModel): #PreTrainedModel):
 
         features = self.extract_features(sequences_output, positions) # bs x hidden
 
-        # clf.forward is called
-        logits = self._clf(features)  # bs x 2 or bs
+        # _reg.forward is called
+        logits = self._reg(features)  # bs x 2 or bs
 
         if input_labels is not None:
             loss['total'] = MSELoss()(logits, labels.unsqueeze(-1).float())

@@ -6,7 +6,7 @@ import shutil
 import argparse
 from tqdm import tqdm
 from pathlib import Path
-from cls_head import CLSModel
+from reg_head import RegModel
 from scipy.stats import spearmanr
 from sklearn.metrics import f1_score
 from collections import defaultdict
@@ -35,7 +35,7 @@ class TRiCModel:
         self.pretrained_model = args.pretrained_model
         self.accum_iter = args.accum_iter
 
-    def load_dataset(self, fname:str, model:CLSModel) -> list:
+    def load_dataset(self, fname:str, model:RegModel) -> list:
         data_processor = DataProcessor()
         examples = data_processor.get_examples(fname)
         features = model.convert_dataset_to_features(examples)
@@ -45,7 +45,7 @@ class TRiCModel:
         return batches
 
     def train(self):
-        model = CLSModel.from_pretrained(self.pretrained_model)
+        model = RegModel.from_pretrained(self.pretrained_model)
         train_batches = self.load_dataset(self.train_path, model)
         dev_batches = self.load_dataset(self.dev_path, model)
 
@@ -128,7 +128,7 @@ class TRiCModel:
 
             model.train()
 
-    def save_model(self, model: CLSModel):
+    def save_model(self, model: RegModel):
         if os.path.exists(self.best_model_path):
             shutil.rmtree(self.best_model_path)
 
@@ -139,10 +139,10 @@ class TRiCModel:
         model_to_save.config.to_json_file(os.path.join(self.best_model_path, 'model.json'))
 
     def predict(self):
-        model = CLSModel.from_pretrained(self.pretrained_model)
-        model._clf.load_state_dict(torch.load(os.path.join(self.best_model_path, 'model.pt')))
+        model = RegModel.from_pretrained(self.pretrained_model)
+        model._reg.load_state_dict(torch.load(os.path.join(self.best_model_path, 'model.pt')))
         model.eval()
-        model._clf.eval()
+        model._reg.eval()
 
         examples = self.load_dataset(args.test_path, model)
         features = model.convert_dataset_to_features(examples)
