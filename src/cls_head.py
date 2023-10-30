@@ -40,7 +40,7 @@ class CLSModel(BertPreTrainedModel): #PreTrainedModel):
         self._tokenizer = AutoTokenizer.from_pretrained(config._name_or_path)
         self._input_size = config.hidden_size
         self._max_seq_len = config.max_position_embeddings
-        self._clf = ClassificationHead(1, self._input_size)
+        self._clf = ClassificationHead(1, self._input_size * 2) # two embeddings will be concatenated
         self.init_weights()
 
     def forward(self,
