@@ -7,6 +7,8 @@ from transformers import AutoTokenizer, AutoModel
 from transformers.modeling_utils import PreTrainedModel
 from transformers.configuration_utils import PretrainedConfig
 
+from transformers import BertPreTrainedModel
+
 class ClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -30,7 +32,7 @@ class Feature:
         self.example = example
 
 
-class CLSModel(PreTrainedModel):
+class CLSModel(BertPreTrainedModel): #PreTrainedModel):
 
     def __init__(self, config: PretrainedConfig):
         super().__init__(config)

@@ -48,8 +48,8 @@ def get_dataloader_and_tensors(features: list, batch_size: int):
         [f.token_type_ids for f in features],
         dtype=torch.long
     )
-    syn_labels = torch.tensor(
-        [f.syn_label for f in features]
+    labels = torch.tensor(
+        [f.label for f in features]
     )
     positions = torch.tensor(
         [f.positions for f in features],
@@ -57,7 +57,7 @@ def get_dataloader_and_tensors(features: list, batch_size: int):
     )
     eval_data = TensorDataset(
         input_ids, input_mask, token_type_ids,
-        syn_labels, positions
+        labels, positions
     )
 
     dataloader = DataLoader(eval_data, batch_size=batch_size)

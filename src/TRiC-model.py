@@ -13,7 +13,6 @@ from collections import defaultdict
 from transformers.optimization import AdamW
 from utils import DataProcessor, get_dataloader_and_tensors, set_seed
 
-
 class TRiCModel:
 
     def __init__(self, args):
