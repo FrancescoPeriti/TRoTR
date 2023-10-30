@@ -141,8 +141,10 @@ class TRiCModel:
         model_to_save.config.to_json_file(os.path.join(self.best_model_path, 'model.json'))
 
     def predict(self):
-        model = torch.load(os.path.join(self.best_model_path, 'model.pt'))
+        model = CLSModel.from_pretrained(self.pretrained_model)
+        model._clf.load_state_dict(torch.load(os.path.join(self.best_model_path, 'model.pt')))
         model.eval()
+        model._clf.eval()
 
         examples = self.load_dataset(args.test_path, model)
         features = model.convert_dataset_to_features(examples)
