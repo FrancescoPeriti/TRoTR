@@ -5,6 +5,7 @@ import random
 import shutil
 import argparse
 from tqdm import tqdm
+from pathlib import Path
 from cls_head import CLSModel
 from scipy.stats import spearmanr
 from sklearn.metrics import f1_score
@@ -162,8 +163,9 @@ class TRiCModel:
 
         labels = []
         scores = []
-        with open(self.stats_path + '_ranking.tsv', 'w+') as f:
-            with open(self.stats_path + '_binary.tsv', 'w+') as g:
+        Path(self.stats_path).mkdir(parents=True, exist_ok=True)
+        with open(os.path.join(self.stats_path, 'ranking.jsonl'), 'w+') as f:
+            with open(os.path.join(self.stats_path, 'binary.jsonl'), 'w+') as g:
                 for ex in ex2pred:
                     rankingline = {'id': ex, 'label': ex2pred[ex]}
                     binaryline = {'id': ex, 'label': int(ex2pred[ex] >= 2.5)}
