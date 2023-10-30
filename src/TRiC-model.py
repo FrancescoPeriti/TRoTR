@@ -10,8 +10,12 @@ from cls_head import CLSModel
 from scipy.stats import spearmanr
 from sklearn.metrics import f1_score
 from collections import defaultdict
-from transformers.optimization import AdamW
+from transformers.optimization import AdamW #torch.optim.AdamW
 from utils import DataProcessor, get_dataloader_and_tensors, set_seed
+from transformers import AutoTokenizer, AutoModel, logging as transformers_logging
+
+# avoid boring logging
+transformers_logging.set_verbosity_error()
 
 class TRiCModel:
 
@@ -29,6 +33,7 @@ class TRiCModel:
         self.test_path = args.test_path
         self.stats_path = args.stats_path
         self.pretrained_model = args.pretrained_model
+        self.accum_iter = args.accum_iter
 
     def load_dataset(self, fname:str, model:CLSModel) -> list:
         data_processor = DataProcessor()
@@ -79,7 +84,8 @@ class TRiCModel:
                 for key in train_loss:
                     cur_train_loss[key] += train_loss[key].mean().item()
 
-                loss_to_optimize = train_loss['total']
+                # normalize loss to account for batch accumulation
+                loss_to_optimize = train_loss['total'] / self.accum_iter
 
                 loss_to_optimize.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), self.max_grad_norm)
@@ -88,8 +94,10 @@ class TRiCModel:
                 nb_tr_examples += input_ids.size(0)
                 nb_tr_steps += 1
 
-                optimizer.step()
-                optimizer.zero_grad()
+                # weights update
+                if ((step + 1) % self.accum_iter == 0) or (step + 1 == len(train_batches)):
+                    optimizer.step()
+                    optimizer.zero_grad()
 
             model.eval()
 
@@ -110,7 +118,6 @@ class TRiCModel:
                                           )
                     predictions = predictions + [v[0] for v in preds.detach().cpu().tolist()]
                     truth = truth + labels.detach().cpu().tolist()
-
 
                 dev_spearman, _ = spearmanr(truth, predictions)
                 print('Spearman Correlation - DEV set:', dev_spearman)
@@ -201,6 +208,7 @@ if __name__ == "__main__":
     parser.add_argument('--do_prediction', action='store_true')
     parser.add_argument('--best_model_path', type=str, default='TRoBERTa')
     parser.add_argument('--pretrained_model', type=str, default='roberta-large')
+    parser.add_argument('--accum_iter', type=int, default=4, help='batch accumulation parameter (gradient-accumulation)')
 
     args = parser.parse_args()
 
