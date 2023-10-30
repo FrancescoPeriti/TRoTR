@@ -53,7 +53,7 @@ class TRiCModel:
         optimizer_parameters = [{'params':
                                      [param for name, param in param_optimizer],
                                  'weight_decay': float(self.weight_decay)}]
-        optimizer = AdamW(
+        optimizer = torch.optim.AdamW( #AdamW(
             optimizer_parameters,
             lr=float(self.lr),
         )
