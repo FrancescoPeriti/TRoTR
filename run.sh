@@ -4,9 +4,9 @@
 #SBATCH -t 2-00:00:00
 
 echo "In-of-Vocabulary (IoV)"
-python src/TRiC-model.py --batch_size 64 --train_path TRoTR/datasets/in-of-vocabulary/pair-by-line/train-ranking.jsonl --dev_path TRoTR/datasets/in-of-vocabulary/pair-by-line/dev-ranking.jsonl --test_path TRoTR/datasets/in-of-vocabulary/pair-by-line/test-binary.jsonl --do_validation --do_training --do_prediction --stats_path stats/in-of-vocabulary --best_model_path TRoBERTa_IoV
+python src/TRiC-model.py --batch_size 16 --train_path TRoTR/datasets/in-of-vocabulary/pair-by-line/train-ranking.jsonl --dev_path TRoTR/datasets/in-of-vocabulary/pair-by-line/dev-ranking.jsonl --test_path TRoTR/datasets/in-of-vocabulary/pair-by-line/test-binary.jsonl --do_validation --do_training --do_prediction --stats_path stats/in-of-vocabulary --best_model_path TRoBERTa_IoV
 
 echo "Out-of-Vocabulary (OoV)"
-python src/TRiC-model.py --batch_size 64 --train_path TRoTR/datasets/out-of-vocabulary/pair-by-line/train-ranking.jsonl --dev_path TRoTR/datasets/out-of-vocabulary/pair-by-line/dev-ranking.jsonl --test_path TRoTR/datasets/out-of-vocabulary/pair-by-line/test-binary.jsonl --do_validation --do_training --do_prediction --stats_path stats/out-of-vocabulary --best_model_path TRoBERTa_OoV
+python src/TRiC-model.py --batch_size 16 --train_path TRoTR/datasets/out-of-vocabulary/pair-by-line/train-ranking.jsonl --dev_path TRoTR/datasets/out-of-vocabulary/pair-by-line/dev-ranking.jsonl --test_path TRoTR/datasets/out-of-vocabulary/pair-by-line/test-binary.jsonl --do_validation --do_training --do_prediction --stats_path stats/out-of-vocabulary --best_model_path TRoBERTa_OoV
 
 
