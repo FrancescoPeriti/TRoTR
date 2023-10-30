@@ -1,12 +1,9 @@
-from torch.utils.data import DataLoader, TensorDataset
-import torch
-import os
 import json
-from collections import Counter
-import pandas as pd
-from glob import glob
+import torch
+import random
 import numpy as np
 from collections import namedtuple
+from torch.utils.data import DataLoader, TensorDataset
 
 def set_seed(seed: int = 42) -> None:
     random.seed(seed)
@@ -14,23 +11,27 @@ def set_seed(seed: int = 42) -> None:
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
+
 class DataProcessor:
 
-    def get_examples(self, fname):
+    def get_examples(self, file_name: str):
         Example = namedtuple('Example', ['docId', 'text_1', 'text_2', 'start_1', 'end_1', 'start_2', 'end_2', 'label'])
         examples = []
-        with open(fname) as f:
+
+        with open(file_name, mode='r', encoding='utf-8') as f:
             for line in f:
-                ex = json.loads(line)
-                if 'label' in ex:
-                    label = ex['label']
+                record = json.loads(line)
+                if 'label' in record:
+                    label = record['label']
                 else:
+                    # not label available
                     label = -1
-                start1, end1 = ex['indices_target_token1'].split(':')
+
+                start1, end1 = record['indices_target_token1'].split(':')
                 start1, end1 = int(start1), int(end1)
-                start2, end2 = ex['indices_target_token1'].split(':')
+                start2, end2 = record['indices_target_token1'].split(':')
                 start2, end2 = int(start2), int(end2)
-                examples.append(Example(ex['instanceID'], ex['context1'], ex['context2'], start1, end1, start2, end2, label))
+                examples.append(Example(record['instanceID'], record['context1'], record['context2'], start1, end1, start2, end2, label))
         return examples
 
 
