@@ -121,8 +121,6 @@ class TRiCModel:
 
                 dev_spearman, _ = spearmanr(truth, predictions)
                 print('Spearman Correlation - DEV set:', dev_spearman)
-                print('Truth', truth)
-                print('Predictions', predictions)
 
             if dev_spearman > best_dev_result:
                 self.save_model(model)

@@ -14,7 +14,7 @@ class ClassificationHead(nn.Module):
 
     def __init__(self, num_classes, input_size):
         super().__init__()
-        self.out_proj = nn.Linear(input_size, num_classes)
+        self.out_proj = nn.Linear(in_features=input_size, out_features=num_classes)
 
     def forward(self, features, **kwargs):
         x = features
@@ -38,7 +38,7 @@ class CLSModel(BertPreTrainedModel): #PreTrainedModel):
         super().__init__(config)
         self._model = AutoModel.from_config(config)
         self._tokenizer = AutoTokenizer.from_pretrained(config._name_or_path)
-        self._input_size = 512 #config.hidden_size
+        self._input_size = config.hidden_size
         self._max_seq_len = config.max_position_embeddings
         self._clf = ClassificationHead(1, self._input_size * 2) # two embeddings will be concatenated
         self.init_weights()
@@ -87,8 +87,8 @@ class CLSModel(BertPreTrainedModel): #PreTrainedModel):
         features = []
         for ex_id in range(bs):
             start1, end1, start2, end2 = positions[ex_id, 0].item(), positions[ex_id, 1].item(), positions[ex_id, 2].item(), positions[ex_id, 3].item()
-            emb1 = hidden_states[ex_id, start1:end1].mean(axis=0)
-            emb2 = hidden_states[ex_id, start2:end2].mean(axis=0)
+            emb1 = hidden_states[ex_id, start1:end1].sum(axis=0)
+            emb2 = hidden_states[ex_id, start2:end2].sum(axis=0)
             merged_feature = torch.cat((emb1, emb2))
             features.append(merged_feature.unsqueeze(0))
 
