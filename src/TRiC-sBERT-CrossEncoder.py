@@ -51,7 +51,7 @@ mask_sentences = defaultdict(list)
 distances = defaultdict(list)
 mask_distances = defaultdict(list)
 
-for data_set in ['train', 'test.in', 'test.out', 'dev']:
+for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
     lines = open(f'TRoTR/datasets/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
     for i, row in enumerate(open(f'TRoTR/datasets/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
         row = json.loads(row)
@@ -72,7 +72,7 @@ pearson_corr, pearson_pvalue = list(), list()
 mask_spearman_corr, mask_spearman_pvalue = list(), list()
 mask_pearson_corr, mask_pearson_pvalue = list(), list()
 
-for data_set in ['train', 'test.in', 'test.out', 'dev']:
+for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
     corr, pvalue = spearmanr(scores[data_set], distances[data_set])
     spearman_corr.append(corr.round(3))
     spearman_pvalue.append(pvalue.round(3))
@@ -92,13 +92,13 @@ _, mask_thr = set_threshold(labels['dev'], mask_distances['dev'])
 
 f1_scores = list()
 mask_f1_scores = list()
-for data_set in ['train', 'test.in', 'test.out', 'dev']:
+for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
     f1 = f1_score(labels[data_set], [m <= thr for m in distances[data_set]], average='weighted')
     f1_scores.append(f1)
     f1 = f1_score(labels[data_set], [m <= mask_thr for m in mask_distances[data_set]], average='weighted')
     mask_f1_scores.append(f1)
 
-header = ['model'] + [f'{data_set}-{column}' for data_set in ['train', 'test.in', 'test.out', 'dev'] for column in
+header = ['model'] + [f'{data_set}-{column}' for data_set in ['train', 'test.iov', 'test.oov', 'dev'] for column in
                       ['spearman_corr', 'spearman_pvalue', 'pearson_corr', 'pearson_pvalue', 'f1_score']] + ['thr']
 header = "\t".join(header)
 
