@@ -1,7 +1,6 @@
 venv/
 .ipynb_checkpoints/
 src/__pycache__/
-TRoBERTa_IoV/
-TRoBERTa_OoV/
+TRoBERTaReg/
 *~
 *.out

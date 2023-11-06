@@ -51,9 +51,9 @@ mask_sentences = defaultdict(list)
 distances = defaultdict(list)
 mask_distances = defaultdict(list)
 
-for data_set in ['train', 'test', 'dev']:
-    lines = open(f'datasets/line-by-line/{data_set}-ranking.jsonl', mode='r', encoding='utf-8').readlines()
-    for i, row in enumerate(open(f'datasets/line-by-line/{data_set}-binary.jsonl', mode='r', encoding='utf-8')):
+for data_set in ['train', 'test.in', 'test.out', 'dev']:
+    lines = open(f'TRoTR/datasets/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
+    for i, row in enumerate(open(f'TRoTR/datasets/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
         row = json.loads(row)
         start, end = [int(i) for i in row['indices_target_token'].split(':')]
         sentences[data_set].append(row['context'])
@@ -72,7 +72,7 @@ pearson_corr, pearson_pvalue = list(), list()
 mask_spearman_corr, mask_spearman_pvalue = list(), list()
 mask_pearson_corr, mask_pearson_pvalue = list(), list()
 
-for data_set in ['train', 'test', 'dev']:
+for data_set in ['train', 'test.in', 'test.out', 'dev']:
     corr, pvalue = spearmanr(scores[data_set], distances[data_set])
     spearman_corr.append(corr.round(3))
     spearman_pvalue.append(pvalue.round(3))
@@ -92,13 +92,13 @@ _, mask_thr = set_threshold(labels['dev'], mask_distances['dev'])
 
 f1_scores = list()
 mask_f1_scores = list()
-for data_set in ['train', 'test', 'dev']:
+for data_set in ['train', 'test.in', 'test.out', 'dev']:
     f1 = f1_score(labels[data_set], [m <= thr for m in distances[data_set]], average='weighted')
     f1_scores.append(f1)
     f1 = f1_score(labels[data_set], [m <= mask_thr for m in mask_distances[data_set]], average='weighted')
     mask_f1_scores.append(f1)
 
-header = ['model'] + [f'{data_set}-{column}' for data_set in ['train', 'test', 'dev'] for column in
+header = ['model'] + [f'{data_set}-{column}' for data_set in ['train', 'test.in', 'test.out', 'dev'] for column in
                       ['spearman_corr', 'spearman_pvalue', 'pearson_corr', 'pearson_pvalue', 'f1_score']] + ['thr']
 header = "\t".join(header)
 
@@ -110,10 +110,10 @@ else:
 
 lines.append(f'{model_name}\t' + "\t".join(
     [f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}' for i in
-     range(3)]) + f'\t{thr}\n')
+     range(4)]) + f'\t{thr}\n')
 lines.append(f'{model_name}\t' + "\t".join([
     f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}'
-    for i in range(3)]) + f'\t{mask_thr}\n')
+    for i in range(4)]) + f'\t{mask_thr}\n')
 
 with open(stats_file, mode='w', encoding='utf-8') as f:
     f.writelines(lines)

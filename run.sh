@@ -4,7 +4,7 @@
 #SBATCH -t 2-00:00:00
 
 batch_size="8"
-n_epochs="100"
+n_epochs="25"
 
 echo "In-of-Vocabulary (IoV)"
 python src/TRiC-model.py --batch_size "${batch_size}" --train_path TRoTR/datasets/pair-by-line/train.ranking.jsonl --dev_path TRoTR/datasets/pair-by-line/dev.ranking.jsonl --test_path TRoTR/datasets/pair-by-line/test.iov.ranking.jsonl --do_training --do_validation --do_prediction --stats_path stats/in-of-vocabulary --best_model_path TRoBERTaReg --n_epochs "${n_epochs}" --accum_iter 1
