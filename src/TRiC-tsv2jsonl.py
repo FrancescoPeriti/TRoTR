@@ -114,8 +114,11 @@ if __name__ == '__main__':
     test_out = df[df['lemma'].isin(test_out.lemma.values)] # 10% of targets
     # train split to have shared train set per dev and test
     train = train.sample(frac=1, random_state=42)
-    train, dev_in, test_in = np.split(train, [int(.8 * len(df)), int(.9 * len(df))])
+    train, dev_in, test_in = np.split(train, [int(.7 * len(train)), int(.85 * len(train))])
     dev = pd.concat([dev_in, dev_out]) # 10% of out-of-vocabulary + 10% of train
+    print('Train:', train.shape[0])
+    print('Dev:', dev.shape[0])
+    print('Test (in/out):', test_in.shape[0], '/', test_out.shape[0])
 
     train_lbl = split_rows(train)
     dev_lbl = split_rows(dev)
