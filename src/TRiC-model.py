@@ -136,19 +136,16 @@ class TRiCModel:
         model_to_save = model.module if hasattr(model, 'module') else model
         output_config_file = os.path.join(self.best_model_path, 'model.conf') ##
         torch.save(model_to_save.state_dict(), os.path.join(self.best_model_path, 'model.pt'))
-        model_to_save.config.to_json_file(os.path.join(self.best_model_path, 'model.json'))
+        model_to_save.config.to_json_file(os.path.join(self.best_model_path, 'config.json'))
 
     def predict(self):
         model = RegModel.from_pretrained(self.pretrained_model)
-        model._reg.load_state_dict(torch.load(os.path.join(self.best_model_path, 'model.pt')))
+        model.load_state_dict(torch.load(os.path.join(self.best_model_path, 'model.pt')))
+        model.to(self.device)
         model.eval()
-        model._reg.eval()
+        #model._reg.eval()
 
-        examples = self.load_dataset(args.test_path, model)
-        features = model.convert_dataset_to_features(examples)
-        test_dataloader = get_dataloader_and_tensors(features, self.batch_size)
-        test_batches = [batch for batch in test_dataloader]
-
+        test_batches = self.load_dataset(self.test_path, model)
         test_bar = tqdm(test_batches, total=len(test_batches), desc='Evaluation - TEST set ...', leave=True, position=0)
 
         predictions = []
@@ -163,29 +160,30 @@ class TRiCModel:
                              input_labels={'labels': labels,
                                            'positions': positions}
                              )
-            gold_scores.extend(labels)
-            gold_labels.extend([int(l>=2.5) for l in labels])
+
+            gold_scores.extend(labels.detach().cpu().tolist())
+            gold_labels.extend([int(l>=2.5) for l in labels.detach().cpu().tolist()])
             predictions.extend([v[0] for v in preds.detach().cpu().tolist()])
 
-        ex2pred = {e.docId: predictions[j] for j, e in enumerate(examples)}
+        scores = predictions
+        labels = [int(p>= 2.5) for p in predictions]
+        #labels = []
+        #scores = []
+        #Path(self.stats_path).mkdir(parents=True, exist_ok=True)
+        #with open(os.path.join(self.stats_path, 'ranking.jsonl'), 'w+') as f:
+        #    with open(os.path.join(self.stats_path, 'binary.jsonl'), 'w+') as g:
+        #        for ex in ex2pred:
+        #            rankingline = {'id': ex, 'label': ex2pred[ex]}
+        #            binaryline = {'id': ex, 'label': int(ex2pred[ex] >= 2.5)}
+        #            scores.append(rankingline['label'])
+        #            labels.append(binaryline['label'])
 
-        labels = []
-        scores = []
-        Path(self.stats_path).mkdir(parents=True, exist_ok=True)
-        with open(os.path.join(self.stats_path, 'ranking.jsonl'), 'w+') as f:
-            with open(os.path.join(self.stats_path, 'binary.jsonl'), 'w+') as g:
-                for ex in ex2pred:
-                    rankingline = {'id': ex, 'label': ex2pred[ex]}
-                    binaryline = {'id': ex, 'label': int(ex2pred[ex] >= 2.5)}
-                    scores.append(rankingline['label'])
-                    labels.append(binaryline['label'])
-
-                    f.write(f'{json.dumps(binaryline)}\n')
-                    g.write(f'{json.dumps(rankingline)}\n')
+        #            f.write(f'{json.dumps(binaryline)}\n')
+        #            g.write(f'{json.dumps(rankingline)}\n')
 
         print('Spearman\tMacro-F1')
         test_spearman, _ = spearmanr(scores, gold_scores)
-        test_f1, _ = f1_score(labels, gold_labels, average='weighted')
+        test_f1 = f1_score(labels, gold_labels, average='weighted')
         print(f'{round(test_spearman, 3)}\t{round(test_f1, 3)}')
 
 if __name__ == "__main__":
@@ -193,7 +191,7 @@ if __name__ == "__main__":
         prog='TRiCModel',
         description="Training of the TRiC model")
 
-    parser.add_argument('-lr', '--learning_rate', type=float, default=1e-5)
+    parser.add_argument('-lr', '--learning_rate', type=float, default=1e-6)
     parser.add_argument('--n_epochs', type=int, default=20)
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--device', type=str, default='cuda')
