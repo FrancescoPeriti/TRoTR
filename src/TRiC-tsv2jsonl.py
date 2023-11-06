@@ -77,10 +77,6 @@ if __name__ == '__main__':
                         type=str,
                         default='Nisha shur AndreaMariaC', #iosakwe
                         help='Annotators')
-    parser.add_argument('-v', '--vocab',
-                        type=str,
-                        default='out-of-vocabulary',  # iosakwe
-                        choices=['in-of-vocabulary', 'out-of-vocabulary'])
     parser.add_argument('-f', '--filename',
                         type=str,
                         default='TRoTR.tsv',
@@ -89,14 +85,9 @@ if __name__ == '__main__':
                         type=str,
                         default='binary',
                         help='Binary or ranking')
-    parser.add_argument('-m', '--mode',
-                        type=str,
-                        default='line-by-line',
-                        help='Specify the context format: "line-by-line" for one context per line, or "pair-by-line" for two contexts per line')
     args = parser.parse_args()
 
     annotators = args.annotators.split()
-    vocab_mode = args.vocab
 
     round_ = args.filename
     df_uses = load_uses()
@@ -115,22 +106,24 @@ if __name__ == '__main__':
         # df = df[(df.label >= 3.5) | (df.label <= 1.5)].reset_index(drop=True)
         df['label'] = [int(label >= 3) for label in df.label.values]
 
+    lemmas = df[['lemma']].drop_duplicates().sample(frac=1, random_state=42)
+    # split per lemma
+    train, dev_out, test_out = np.split(lemmas, [int(.8 * len(lemmas)), int(.9 * len(lemmas))])
+    train = df[df['lemma'].isin(train.lemma.values)] # 80% of targets
+    dev_out = df[df['lemma'].isin(dev_out.lemma.values)] # 10% of targets
+    test_out = df[df['lemma'].isin(test_out.lemma.values)] # 10% of targets
+    # train split to have shared train set per dev and test
+    train = train.sample(frac=1, random_state=42)
+    train, dev_in, test_in = np.split(train, [int(.8 * len(df)), int(.9 * len(df))])
+    dev = pd.concat([dev_in, dev_out]) # 10% of out-of-vocabulary + 10% of train
 
-    if vocab_mode == 'in-of-vocabulary':
-        df = df.sample(frac=1, random_state=42)
-        train, dev, test = np.split(df, [int(.6*len(df)), int(.8*len(df))])
-    else:
-        lemmas = df[['lemma']].drop_duplicates().sample(frac=1, random_state=42)
-        train, dev, test = np.split(lemmas, [int(.6 * len(lemmas)), int(.8 * len(lemmas))])
-        train = df[df['lemma'].isin(train.lemma.values)]
-        dev = df[df['lemma'].isin(dev.lemma.values)]
-        test = df[df['lemma'].isin(test.lemma.values)]
+    train_lbl = split_rows(train)
+    dev_lbl = split_rows(dev)
+    test_lbl_in = split_rows(test_in)
+    test_lbl_out = split_rows(test_out)
 
-    if args.mode == 'line-by-line':
-        train = split_rows(train)
-        dev = split_rows(dev)
-        test = split_rows(test)
-
-    for k,v in {'train':train, 'dev':dev, 'test':test}.items():
-        Path(f'TRoTR/datasets/{vocab_mode}/{args.mode}').mkdir(parents=True, exist_ok=True)
-        v.to_json(f'TRoTR/datasets/{vocab_mode}/{args.mode}/{k}-{args.subtask}.jsonl', orient='records', lines=True)
+    for k, v in {'train': (train,train_lbl), 'dev':(dev,dev_lbl), 'test.iov': (test_in, test_lbl_in), 'test.oov': (test_out, test_lbl_out)}.items():
+        Path(f'TRoTR/datasets/line-by-line').mkdir(parents=True, exist_ok=True)
+        v[1].to_json(f'TRoTR/datasets/line-by-line/{k}.{args.subtask}.jsonl', orient='records', lines=True)
+        Path(f'TRoTR/datasets/pair-by-line').mkdir(parents=True, exist_ok=True)
+        v[0].to_json(f'TRoTR/datasets/pair-by-line/{k}.{args.subtask}.jsonl', orient='records', lines=True)
