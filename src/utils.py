@@ -55,9 +55,13 @@ def get_dataloader_and_tensors(features: list, batch_size: int):
         [f.positions for f in features],
         dtype=torch.long
     )
+    sentence_position = torch.tensor(
+        [f.sentence_position for f in features],
+        dtype=torch.long
+    )
     eval_data = TensorDataset(
         input_ids, input_mask, token_type_ids,
-        labels, positions
+        labels, positions, sentence_position
     )
 
     dataloader = DataLoader(eval_data, batch_size=batch_size)
