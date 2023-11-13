@@ -10,6 +10,7 @@ from sentence_transformers import SentenceTransformer
 
 import argparse
 parser = argparse.ArgumentParser(prog='sBERT', description='Extract sBERT embeddings')
+parser.add_argument('-p', '--data_path', type=str, default='')
 parser.add_argument('-m', '--model', type=str, default='all-MiniLM-L6-v2')
 parser.add_argument('-b', '--batch_size', type=int, default=32)
 parser.add_argument('-d', '--device', type=str, default='cuda', choices=['cuda', 'cpu'])
@@ -47,8 +48,8 @@ distances = defaultdict(list)
 mask_distances = defaultdict(list)
 
 for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
-    lines = open(f'TRoTR/datasets/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
-    for i, row in enumerate(open(f'TRoTR/datasets/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
+    lines = open(f'{args.data_path}TRoTR/datasets/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
+    for i, row in enumerate(open(f'{args.data_path}TRoTR/datasets/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
         row = json.loads(row)
         start, end = [int(i) for i in row['indices_target_token'].split(':')]
         sentences[data_set].append(row['context'])
