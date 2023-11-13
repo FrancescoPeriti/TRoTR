@@ -3,6 +3,28 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
+def std_judgments(df, lemma=False):
+    dfs = list()
+
+    if not lemma:
+        for ann in df.annotator.unique():
+            tmp = df[df['annotator']==ann].copy()
+            avg = np.mean(tmp.label[tmp.label >= 1].values)
+            tmp.label = [i if i!=-1 else avg for i in tmp.label]
+            tmp.label = (tmp.label - tmp.label.mean())/(tmp.label.std())
+            dfs.append(tmp)
+        return pd.concat(dfs)
+    if lemma:
+        for ann in df.annotator.unique():
+            for lemma in df.lemma.unique():
+                tmp = df[(df['annotator']==ann) & (df['lemma']==lemma)].copy()
+                avg = np.mean(tmp.label[tmp.label >= 1].values)
+                tmp.label = [i if i!=-1 else avg for i in tmp.label]
+                tmp.label = (tmp.label - tmp.label.mean())/(tmp.label.std())
+                dfs.append(tmp)
+        return pd.concat(dfs)
+
+
 def load_uses(filename='TRoTR/data/uses.tsv', sep='\t'):
     tmp = list()
     with open(filename, mode='r', encoding='utf-8') as f:
@@ -75,7 +97,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Random sampling', add_help=True)
     parser.add_argument('-a', '--annotators',
                         type=str,
-                        default='Nisha shur AndreaMariaC', #iosakwe
+                        default='Nisha AndreaMariaC', #iosakwe shur
                         help='Annotators')
     parser.add_argument('-f', '--filename',
                         type=str,
@@ -98,13 +120,15 @@ if __name__ == '__main__':
     # remove cannot decide '-' and excluded annotators
     df = df[(df.label != -1) & (df.annotator.isin(annotators))]
 
+    df = std_judgments(df, lemma=False)
+
     del df['comment']
     del df['annotator']
     df = df.groupby([c for c in df.columns.values if c != 'label']).mean().reset_index()
 
     if args.subtask == 'binary':
         # df = df[(df.label >= 3.5) | (df.label <= 1.5)].reset_index(drop=True)
-        df['label'] = [int(label >= 3) for label in df.label.values]
+        df['label'] = [int(label > 0) for label in df.label.values]
 
     lemmas = df[['lemma']].drop_duplicates().sample(frac=1, random_state=42)
     # split per lemma
@@ -116,9 +140,15 @@ if __name__ == '__main__':
     train = train.sample(frac=1, random_state=42)
     train, dev_in, test_in = np.split(train, [int(.7 * len(train)), int(.85 * len(train))])
     dev = pd.concat([dev_in, dev_out]) # 10% of out-of-vocabulary + 10% of train
-    print('Train:', train.shape[0])
-    print('Dev:', dev.shape[0])
+    print('-- Train:', train.shape[0], '--')
+    print('- 0:', train[train['label'] <= 0].shape[0])
+    print('- 1:', train[train['label'] > 0].shape[0])
+    print('-- Dev:', dev.shape[0], '--')
+    print('- 0:', dev[dev['label'] <= 0].shape[0])
+    print('- 1:', dev[dev['label'] > 0].shape[0])
     print('Test (in/out):', test_in.shape[0], '/', test_out.shape[0])
+    print('- 0 (in/out):', test_in[test_in['label'] <= 0].shape[0], '/', test_out[test_out['label'] <= 0].shape[0])
+    print('- 1 (in/out):', test_in[test_in['label'] > 0].shape[0], '/', test_out[test_out['label'] > 0].shape[0])
 
     train_lbl = split_rows(train)
     dev_lbl = split_rows(dev)
