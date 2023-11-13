@@ -65,8 +65,8 @@ for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
         emb2 = embeddings[data_set][i + 1]
         mask_emb1 = mask_embeddings[data_set][i]
         mask_emb2 = mask_embeddings[data_set][i + 1]
-        distances[data_set].append(cosine(emb1, emb2))
-        mask_distances[data_set].append(cosine(mask_emb1, mask_emb2))
+        distances[data_set].append(1-cosine(emb1, emb2))
+        mask_distances[data_set].append(1-cosine(mask_emb1, mask_emb2))
 
 spearman_corr, spearman_pvalue = list(), list()
 pearson_corr, pearson_pvalue = list(), list()
@@ -109,7 +109,7 @@ else:
     lines = open(stats_file, mode='r',encoding='utf-8').readlines()
 
 lines.append(f'{model_name}\t' + "\t".join([f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}' for i in range(4)]) + f'\t{thr}\n')
-lines.append(f'{model_name}\t' + "\t".join([f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}' for i in range(4)]) + f'\t{mask_thr}\n')
+lines.append(f'{model_name}_mask\t' + "\t".join([f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}' for i in range(4)]) + f'\t{mask_thr}\n')
 
 with open(stats_file, mode='w', encoding='utf-8') as f:
     f.writelines(lines)

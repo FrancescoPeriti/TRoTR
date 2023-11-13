@@ -111,7 +111,7 @@ else:
 lines.append(f'{model_name}\t' + "\t".join(
     [f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}' for i in
      range(4)]) + f'\t{thr}\n')
-lines.append(f'{model_name}\t' + "\t".join([
+lines.append(f'{model_name}_mask\t' + "\t".join([
     f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}'
     for i in range(4)]) + f'\t{mask_thr}\n')
 
