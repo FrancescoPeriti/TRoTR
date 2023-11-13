@@ -23,13 +23,14 @@ class RegressionHead(nn.Module):
 
 
 class Feature:
-    def __init__(self, input_ids: list, input_mask: list, token_type_ids: list, label: float, positions: list, example: int):
+    def __init__(self, input_ids: list, input_mask: list, token_type_ids: list, label: float, positions: list, sentence_position: int, example: int):
         self.input_ids = input_ids
         self.input_mask = input_mask
         self.token_type_ids = token_type_ids
         self.label = label
         self.positions = positions
         self.example = example
+        self.sentence_position = sentence_position
 
 
 class RegModel(BertPreTrainedModel): #PreTrainedModel):
@@ -42,6 +43,7 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
         self._max_seq_len = config.max_position_embeddings
         self._reg = RegressionHead(1, self._input_size * 2) # two embeddings will be concatenated
         self.init_weights()
+        self.mode = 'context'
 
     def forward(self,
                 input_ids: Optional[torch.Tensor] = None,
@@ -67,8 +69,9 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
 
         labels = input_labels['labels']  # bs
         positions = input_labels['positions'] # bs x 4 - (i.e., 4: start1, end1, start2, end2)
+        sentence_positions = input_labels['sentence_position']
 
-        features = self.extract_features(sequences_output, positions) # bs x hidden
+        features = self.extract_features(sequences_output, positions, sentence_positions) # bs x hidden
 
         # _reg.forward is called
         logits = self._reg(features)  # bs x 2 or bs
@@ -81,14 +84,21 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
 
     def extract_features(self,
                          hidden_states: torch.tensor,
-                         positions: torch.tensor):
+                         positions: torch.tensor,
+                         sentence_positions: torch.tensor):
 
         bs, seq, hs = hidden_states.size()
         features = []
         for ex_id in range(bs):
             start1, end1, start2, end2 = positions[ex_id, 0].item(), positions[ex_id, 1].item(), positions[ex_id, 2].item(), positions[ex_id, 3].item()
-            emb1 = hidden_states[ex_id, start1:end1].sum(axis=0)
-            emb2 = hidden_states[ex_id, start2:end2].sum(axis=0)
+            if self.mode == 'context':
+                s2_start, s2_end = sentence_positions[ex_id, 0].item() + 1, sentence_positions[ex_id, 1].item() - 1
+                s1_start, s1_end = 1, sentence_positions[ex_id, 0].item() - 1 # 1 to avoid CLS, s2_start -1 to skip sep
+                emb1 = hidden_states[ex_id, [i for i in range(s1_start,s1_end+1) if i<start1 or i>=end1]].sum(axis=0)
+                emb2 = hidden_states[ex_id, [i for i in range(s2_start, s2_end + 1) if i<start2 or i>=end2]].sum(axis=0)
+            else:
+                emb1 = hidden_states[ex_id, start1:end1].sum(axis=0)
+                emb2 = hidden_states[ex_id, start2:end2].sum(axis=0)
             merged_feature = torch.cat((emb1, emb2))
             features.append(merged_feature.unsqueeze(0))
 
@@ -107,6 +117,7 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
             tokens = [self._tokenizer.cls_token]
 
             positions = [0,0,0,0]
+            sentence_position = [0,0]
             left1, target1, right1 = sent1[:start1], sent1[start1:end1], sent1[end1:]
             left2, target2, right2 = sent2[:start2], sent2[start2:end2], sent2[end2:]
 
@@ -120,6 +131,9 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
 
             if right1:
                 tokens += self._tokenizer.tokenize(right1) + [self._tokenizer.sep_token]
+
+            sentence_position[0] = len(tokens) - 1
+
             if left2:
                 tokens += self._tokenizer.tokenize(left2)
 
@@ -130,6 +144,8 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
 
             if right2:
                 tokens += self._tokenizer.tokenize(right2) + [self._tokenizer.sep_token]
+
+            sentence_position[1] = len(tokens) - 1
 
             input_ids = self._tokenizer.convert_tokens_to_ids(tokens)
             if len(input_ids) > self._max_seq_len:
@@ -153,7 +169,8 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
                     token_type_ids=token_type_ids,
                     label=ex.label,
                     positions=positions,
-                    example=ex
+                    example=ex,
+                    sentence_position = sentence_position
                     )
                 )
         return features

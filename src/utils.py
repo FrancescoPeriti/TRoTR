@@ -29,7 +29,7 @@ class DataProcessor:
 
                 start1, end1 = record['indices_target_token1'].split(':')
                 start1, end1 = int(start1), int(end1)
-                start2, end2 = record['indices_target_token1'].split(':')
+                start2, end2 = record['indices_target_token2'].split(':')
                 start2, end2 = int(start2), int(end2)
                 examples.append(Example(record['instanceID'], record['context1'], record['context2'], start1, end1, start2, end2, label))
         return examples
