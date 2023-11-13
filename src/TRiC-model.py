@@ -74,11 +74,11 @@ class TRiCModel:
 
             for step, batch in enumerate(train_bar):
                 batch = tuple(t.to(self.device) for t in batch)
-                input_ids, input_mask, token_type_ids, labels, positions = batch
+                input_ids, input_mask, token_type_ids, labels, positions, sentence_position = batch
                 train_loss, _ = model(input_ids=input_ids,
                                       token_type_ids=token_type_ids,
                                       attention_mask=input_mask,
-                                      input_labels={'labels': labels, 'positions': positions}
+                                      input_labels={'labels': labels, 'positions': positions, 'sentence_position':sentence_position}
                 )
 
                 for key in train_loss:
@@ -110,11 +110,11 @@ class TRiCModel:
 
                 for step, batch in enumerate(dev_bar):
                     batch = tuple(t.to(self.device) for t in batch)
-                    input_ids, input_mask, token_type_ids, labels, positions = batch
+                    input_ids, input_mask, token_type_ids, labels, positions, sentence_position = batch
                     _, preds = model(input_ids=input_ids,
                                           token_type_ids=token_type_ids,
                                           attention_mask=input_mask,
-                                          input_labels={'labels': labels, 'positions': positions}
+                                          input_labels={'labels': labels, 'positions': positions, 'sentence_position':sentence_position}
                                           )
                     predictions = predictions + [v[0] for v in preds.detach().cpu().tolist()]
                     truth = truth + labels.detach().cpu().tolist()
@@ -153,12 +153,13 @@ class TRiCModel:
         gold_scores = []
         for step, batch in enumerate(test_bar):
             batch = tuple(t.to(self.device) for t in batch)
-            input_ids, input_mask, token_type_ids, labels, positions = batch
+            input_ids, input_mask, token_type_ids, labels, positions, sentence_position = batch
             _, preds = model(input_ids=input_ids,
                              token_type_ids=token_type_ids,
                              attention_mask=input_mask,
                              input_labels={'labels': labels,
-                                           'positions': positions}
+                                           'positions': positions,
+                                           'sentence_position':sentence_position}
                              )
 
             gold_scores.extend(labels.detach().cpu().tolist())
