@@ -62,16 +62,20 @@ class Baseline:
 
                 if self.add_tags:
                     start1, end1 = line['indices_target_token1'].split(':')
-                    start2, end2 = line['indices_target_token1'].split(':')
+                    start2, end2 = line['indices_target_token2'].split(':')
                     start1, end1 = int(start1), int(end1)
                     start2, end2 = int(start2), int(end2) 
 
                     new_sentence1 = sentence1[:start1] + '<t>' + sentence1[start1:end1] + '</t>' + sentence1[end1:]
                     new_sentence2 = sentence2[:start2] + '<t>' + sentence2[start2:end2] + '</t>' + sentence2[end2:]
 
-                examples.append(InputExample(texts=[sentence1, sentence2], label=line['label']))
-                sentences[0].append(sentence1)
-                sentences[1].append(sentence2)
+                else:
+                    new_sentence1 = sentence1
+                    new_sentence2 = sentence2
+
+                examples.append(InputExample(texts=[new_sentence1, new_sentence2], label=line['label']))
+                sentences[0].append(new_sentence1)
+                sentences[1].append(new_sentence2)
                 labels.append(line['label'])
 
         dataloader = DataLoader(examples, shuffle=True, batch_size=self.batch_size)
