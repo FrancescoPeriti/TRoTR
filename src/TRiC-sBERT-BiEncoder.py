@@ -10,6 +10,7 @@ from sentence_transformers import SentenceTransformer
 
 import argparse
 parser = argparse.ArgumentParser(prog='sBERT', description='Extract sBERT embeddings')
+parser.add_argument('--add_tags', action='store_true')
 parser.add_argument('-p', '--data_path', type=str, default='')
 parser.add_argument('-m', '--model', type=str, default='all-MiniLM-L6-v2')
 parser.add_argument('-b', '--batch_size', type=int, default=32)
@@ -47,12 +48,20 @@ mask_embeddings = dict()
 distances = defaultdict(list)
 mask_distances = defaultdict(list)
 
+def load_sentence(row, add_tags):
+    if not add_tags:
+        return row['context']
+    else:
+        start, end = [int(i) for i in row['indices_target_token'].split(':')]
+        return row['context'][:start] + '<t>' + row['context'][start:end] + '</t>' + row['context'][end:]
+
+
 for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
     lines = open(f'{args.data_path}TRoTR/datasets/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
     for i, row in enumerate(open(f'{args.data_path}TRoTR/datasets/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
         row = json.loads(row)
         start, end = [int(i) for i in row['indices_target_token'].split(':')]
-        sentences[data_set].append(row['context'])
+        sentences[data_set].append(load_sentence(row, args.add_tags)) #row['context'])
         mask_sentences[data_set].append(row['context'][:start] + ' - ' + row['context'][end:])
         if i % 2 == 0:
             labels[data_set].append(float(row['label']))

@@ -19,6 +19,7 @@ class RegressionHead(nn.Module):
     def forward(self, features, **kwargs):
         x = features
         x = self.out_proj(x)
+        #x = nn.Tanh()(x)
         return x
 
 
@@ -69,9 +70,9 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
 
         labels = input_labels['labels']  # bs
         positions = input_labels['positions'] # bs x 4 - (i.e., 4: start1, end1, start2, end2)
-        sentence_positions = input_labels['sentence_position']
+        sentence_position = input_labels['sentence_position']
 
-        features = self.extract_features(sequences_output, positions, sentence_positions) # bs x hidden
+        features = self.extract_features(sequences_output, positions, sentence_position) # bs x hidden
 
         # _reg.forward is called
         logits = self._reg(features)  # bs x 2 or bs
@@ -146,6 +147,16 @@ class RegModel(BertPreTrainedModel): #PreTrainedModel):
                 tokens += self._tokenizer.tokenize(right2) + [self._tokenizer.sep_token]
 
             sentence_position[1] = len(tokens) - 1
+
+
+            ########
+            s2_start, s2_end = sentence_position[0] + 1, sentence_position[1] - 1
+            s1_start, s1_end = 1, sentence_position[0] - 1 # 1 to avoid CLS, s2_start -1 to skip sep
+            #print("########")
+            #print("SENTENCE1:", " ".join(tokens[s1_start:s1_end]).replace('Ġ', ''), '\nTARGET1:', " ".join(tokens[positions[0]:positions[1]]).replace('Ġ', ''))
+            #print("-")
+            #print("SENTENCE2:", " ".join(tokens[s2_start:s2_end]), '\nTARGET2', " ".join(tokens[positions[2]:positions[3]]).replace('Ġ', ''))
+            ########
 
             input_ids = self._tokenizer.convert_tokens_to_ids(tokens)
             if len(input_ids) > self._max_seq_len:
