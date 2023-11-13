@@ -13,8 +13,9 @@ from sklearn.metrics import (precision_recall_fscore_support, classification_rep
 from collections import namedtuple
 from scipy.stats import spearmanr
 from torch.utils.data import DataLoader
-from sentence_transformers import SentenceTransformer, models, losses, InputExample
+from sentence_transformers import SentenceTransformer, models, losses, InputExample, CrossEncoder
 from sentence_transformers.evaluation import BinaryClassificationEvaluator
+from sentence_transformers.cross_encoder.evaluation import CECorrelationEvaluator
 import torch
 import random
 
@@ -43,9 +44,13 @@ class Baseline:
         self.add_tags = args.add_tags
         self.loss = args.loss
         self.evaluation = args.evaluation
+        self.finetune_sbert = args.finetune_sbert
+        self.sbert_pretrained_model = args.sbert_pretrained_model
+        self.pretrained_model = args.pretrained_model
+        self.model_type = args.model_type
 
 
-    def load_data(self, path, return_sentences=False):
+    def load_data(self, path, return_sentences=False, return_inputs=False):
         examples = []
         sentences = [[],[]]
         labels = []
@@ -73,19 +78,37 @@ class Baseline:
 
         if return_sentences:
             return sentences, labels
+        elif return_inputs:
+            return [[sentences[0][j],sentences[1][j]] for j in range(len(sentences[0]))], labels
         else:
             return dataloader
 
 
 
     def init_model(self):
-        word_embedding_model = models.Transformer(self.pretrained_model, max_seq_length=self.max_seq_length)
-        if self.add_tags:
-            tokens = ["<t>", "</t>"]
-            word_embedding_model.tokenizer.add_tokens(tokens, special_tokens=True)
-            word_embedding_model.auto_model.resize_token_embeddings(len(word_embedding_model.tokenizer))
-        pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension())
-        self.model = SentenceTransformer(modules=[word_embedding_model, pooling_model], device=self.device)
+        if self.finetune_sbert:
+            if self.model_type == 'crossencoder':
+                self.model = CrossEncoder(self.sbert_pretrained_model,num_labels=1)
+                if self.add_tags:
+                    word_embedding_model = self.model.model
+                    tokens = ["<t>", "</t>"]
+                    self.model.tokenizer.add_tokens(tokens, special_tokens=True)
+                    word_embedding_model.resize_token_embeddings(len(self.model.tokenizer))
+            else:
+                self.model = SentenceTransformer(self.sbert_pretrained_model)
+                if self.add_tags:
+                    word_embedding_model = self.model._first_module()
+                    tokens = ["<t>", "</t>"]
+                    word_embedding_model.tokenizer.add_tokens(tokens, special_tokens=True)
+                    word_embedding_model.auto_model.resize_token_embeddings(len(word_embedding_model.tokenizer))
+        else:
+            word_embedding_model = models.Transformer(self.pretrained_model, max_seq_length=self.max_seq_length)
+            if self.add_tags:
+                tokens = ["<t>", "</t>"]
+                word_embedding_model.tokenizer.add_tokens(tokens, special_tokens=True)
+                word_embedding_model.auto_model.resize_token_embeddings(len(word_embedding_model.tokenizer))
+            pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension())
+            self.model = SentenceTransformer(modules=[word_embedding_model, pooling_model], device=self.device)
 
         if self.loss == 'contrastive':
             self.train_loss = losses.ContrastiveLoss(self.model)
@@ -119,26 +142,42 @@ class Baseline:
         self.init_model()
         train_dataloader = self.load_data(self.train_path)
         warmup_steps = self.warmup_percentage * (len(train_dataloader) * self.n_epochs)
-
-        dev_sentences, dev_labels = self.load_data(self.dev_path,return_sentences=True)
         evaluation_steps = int(0.25 * (len(train_dataloader)))
 
         if self.evaluation == 'binary' and self.loss == 'contrastive':
-            evaluator = BinaryClassificationEvaluator(dev_sentences[0],dev_sentences[1],dev_labels)
+            dev_sentences, dev_labels = self.load_data(self.dev_path, return_sentences=True)
+            evaluator = BinaryClassificationEvaluator(dev_sentences[0], dev_sentences[1], dev_labels)
 
+        if self.evaluation == 'correlation':
+            dev_sentences, dev_labels = self.load_data(self.dev_path, return_inputs=True)
+            evaluator = CECorrelationEvaluator(dev_sentences, dev_labels)
 
-        self.model.fit(
-            train_objectives=[(train_dataloader, self.train_loss)],
-            epochs=self.n_epochs,
-            optimizer_params={'lr': self.lr},
-            warmup_steps=warmup_steps,
-            evaluator=evaluator,
-            callback=Callback(warmup_steps, len(train_dataloader),model_name=f"model_{self.lr}_{self.weight_decay}", output_path=self.output_path),
-            evaluation_steps=evaluation_steps,
-            output_path=os.path.join(f"{self.output_path}",f"model_{self.lr}_{self.weight_decay}"),
-            weight_decay=self.weight_decay,
-            show_progress_bar=False
-        )
+        if self.model_type == 'siamese':
+            self.model.fit(
+                train_objectives=[(train_dataloader, self.train_loss)],
+                epochs=self.n_epochs,
+                optimizer_params={'lr': self.lr},
+                warmup_steps=warmup_steps,
+                evaluator=evaluator,
+                callback=Callback(warmup_steps, len(train_dataloader),model_name=f"model_{self.lr}_{self.weight_decay}", output_path=self.output_path),
+                evaluation_steps=evaluation_steps,
+                output_path=os.path.join(f"{self.output_path}",f"model_{self.lr}_{self.weight_decay}"),
+                weight_decay=self.weight_decay,
+                show_progress_bar=False
+            )
+        else:
+            self.model.fit(
+                train_dataloader=train_dataloader,
+                epochs=self.n_epochs,
+                optimizer_params={'lr': self.lr},
+                warmup_steps=warmup_steps,
+                evaluator=evaluator,
+                callback=Callback(warmup_steps, len(train_dataloader),model_name=f"model_{self.lr}_{self.weight_decay}", output_path=self.output_path),
+                evaluation_steps=evaluation_steps,
+                output_path=os.path.join(f"{self.output_path}",f"model_{self.lr}_{self.weight_decay}"),
+                weight_decay=self.weight_decay,
+                show_progress_bar=False
+            )
 
 
     def predict(self):
@@ -194,11 +233,11 @@ if __name__ == "__main__":
         prog='Baseline model',
         description="Training of the baseline model")
 
-    parser.add_argument('--lr', default=1e-5)
+    parser.add_argument('--lr', default=2e-5)
     parser.add_argument('--n_epochs', default=20)
     parser.add_argument('--batch_size', default=16)
-    parser.add_argument('--weight_decay', default=0.)
-    parser.add_argument('--warmup_percentage', default=0.1)
+    parser.add_argument('--weight_decay', default=0.0)
+    parser.add_argument('--warmup_percentage', default=0.01)
     parser.add_argument('--loss', default="contrastive", choices=['ce', 'mse', 'contrastive'])
     parser.add_argument('--add_tags', default=True)
     parser.add_argument('--device', default='cuda')
@@ -207,9 +246,12 @@ if __name__ == "__main__":
     parser.add_argument('--strategy', default='target', choices=['context', 'target'])
     parser.add_argument('--dev_path', default="")
     parser.add_argument('--test_path', default="")
+    parser.add_argument('--model_type', default="siamese")
     parser.add_argument('--do_validation', default=True)
     parser.add_argument('--output_path', default='models')
+    parser.add_argument('--finetune_sbert', default=False)
     parser.add_argument('--pretrained_model', default='roberta-large')
+    parser.add_argument('--sbert_pretrained_model', default='paraphrase-multilingual-mpnet-base-v2')
     parser.add_argument('--max_seq_length', default=512)
 
 
