@@ -59,7 +59,7 @@ for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
         sentences[data_set].append(row['context'])
         mask_sentences[data_set].append(row['context'][:start] + ' - ' + row['context'][end:])
         if i % 2 == 0:
-            labels[data_set].append(float(row['label']))
+            labels[data_set].append(1-float(row['label'])) # distance -> similarity
             scores[data_set].append(float(json.loads(lines[i])['label']))
 
     distances[data_set] = model.predict([(sentences[data_set][i], sentences[data_set][i + 1])

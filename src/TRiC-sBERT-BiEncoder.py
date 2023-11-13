@@ -65,8 +65,8 @@ for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
         emb2 = embeddings[data_set][i + 1]
         mask_emb1 = mask_embeddings[data_set][i]
         mask_emb2 = mask_embeddings[data_set][i + 1]
-        distances[data_set].append(1-cosine(emb1, emb2))
-        mask_distances[data_set].append(1-cosine(mask_emb1, mask_emb2))
+        distances[data_set].append(cosine(emb1, emb2))
+        mask_distances[data_set].append(cosine(mask_emb1, mask_emb2))
 
 spearman_corr, spearman_pvalue = list(), list()
 pearson_corr, pearson_pvalue = list(), list()
@@ -74,17 +74,17 @@ mask_spearman_corr, mask_spearman_pvalue = list(), list()
 mask_pearson_corr, mask_pearson_pvalue = list(), list()
 
 for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
-    corr, pvalue = spearmanr(scores[data_set], distances[data_set])
+    corr, pvalue = spearmanr(scores[data_set], -np.array(distances[data_set])) # distance -> similarity
     spearman_corr.append(round(corr,3))
     spearman_pvalue.append(round(pvalue, 3))
-    corr, pvalue = pearsonr(scores[data_set], distances[data_set])
+    corr, pvalue = pearsonr(scores[data_set], -np.array(distances[data_set])) # distance -> similarity
     pearson_corr.append(round(corr, 3))
     pearson_pvalue.append(round(pvalue, 3))
 
-    corr, pvalue = spearmanr(scores[data_set], mask_distances[data_set])
+    corr, pvalue = spearmanr(scores[data_set], -np.array(mask_distances[data_set])) # distance -> similarity
     mask_spearman_corr.append(round(corr, 3))
     mask_spearman_pvalue.append(round(pvalue, 3))
-    corr, pvalue = pearsonr(scores[data_set], mask_distances[data_set])
+    corr, pvalue = pearsonr(scores[data_set], -np.array(mask_distances[data_set])) # distance -> similarity
     mask_pearson_corr.append(round(corr, 3))
     mask_pearson_pvalue.append(round(pvalue, 3))
 

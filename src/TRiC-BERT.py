@@ -132,17 +132,17 @@ mask_spearman_corr, mask_spearman_pvalue = list(), list()
 mask_pearson_corr, mask_pearson_pvalue = list(), list()
 
 for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
-    corr, pvalue = spearmanr(scores[data_set], distances[data_set])
+    corr, pvalue = spearmanr(scores[data_set], -np.array(distances[data_set])) # distance -> similarity
     spearman_corr.append(corr.round(3))
     spearman_pvalue.append(pvalue.round(3))
-    corr, pvalue = pearsonr(scores[data_set], distances[data_set])
+    corr, pvalue = pearsonr(scores[data_set], -np.array(distances[data_set])) # distance -> similarity
     pearson_corr.append(corr.round(3))
     pearson_pvalue.append(pvalue.round(3))
 
-    corr, pvalue = spearmanr(scores[data_set], mask_distances[data_set])
+    corr, pvalue = spearmanr(scores[data_set], -np.array(mask_distances[data_set])) # distance -> similarity
     mask_spearman_corr.append(corr.round(3))
     mask_spearman_pvalue.append(pvalue.round(3))
-    corr, pvalue = pearsonr(scores[data_set], mask_distances[data_set])
+    corr, pvalue = pearsonr(scores[data_set], -np.array(mask_distances[data_set])) # distance -> similarity
     mask_pearson_corr.append(corr.round(3))
     mask_pearson_pvalue.append(pvalue.round(3))
 
