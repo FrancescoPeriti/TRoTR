@@ -146,16 +146,26 @@ if __name__ == '__main__':
     print('-- Dev:', dev.shape[0], '--')
     print('- 0:', dev[dev['label'] <= 0].shape[0])
     print('- 1:', dev[dev['label'] > 0].shape[0])
+    print('Dev (in/out):', dev_in.shape[0], '/', dev_out.shape[0])
+    print('- 0 (in/out):', dev_in[dev_in['label'] <= 0].shape[0], '/', dev_out[dev_out['label'] <= 0].shape[0])
+    print('- 1 (in/out):', dev_in[dev_in['label'] > 0].shape[0], '/', dev_out[dev_out['label'] > 0].shape[0])
     print('Test (in/out):', test_in.shape[0], '/', test_out.shape[0])
     print('- 0 (in/out):', test_in[test_in['label'] <= 0].shape[0], '/', test_out[test_out['label'] <= 0].shape[0])
     print('- 1 (in/out):', test_in[test_in['label'] > 0].shape[0], '/', test_out[test_out['label'] > 0].shape[0])
 
     train_lbl = split_rows(train)
     dev_lbl = split_rows(dev)
+    dev_lbl_in = split_rows(dev_in)
+    dev_lbl_out = split_rows(dev_out)
     test_lbl_in = split_rows(test_in)
     test_lbl_out = split_rows(test_out)
 
-    for k, v in {'train': (train,train_lbl), 'dev':(dev,dev_lbl), 'test.iov': (test_in, test_lbl_in), 'test.oov': (test_out, test_lbl_out)}.items():
+    for k, v in {'train': (train,train_lbl),
+                 'dev':(dev, dev_lbl),
+                 'test.iov': (test_in, test_lbl_in),
+                 'test.oov': (test_out, test_lbl_out),
+                 'dev.iov': (dev_in, dev_lbl_in),
+                 'dev.oov': (dev_out, dev_lbl_out)}.items():
         Path(f'TRoTR/datasets/line-by-line').mkdir(parents=True, exist_ok=True)
         v[1].to_json(f'TRoTR/datasets/line-by-line/{k}.{args.subtask}.jsonl', orient='records', lines=True)
         Path(f'TRoTR/datasets/pair-by-line').mkdir(parents=True, exist_ok=True)
