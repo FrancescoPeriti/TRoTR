@@ -17,12 +17,12 @@ parser.add_argument('-b', '--batch_size', type=int, default=32)
 parser.add_argument('-d', '--device', type=str, default='cuda', choices=['cuda', 'cpu'])
 args = parser.parse_args()
 
-def set_threshold(y_true, y):
+def set_threshold(y_true, y, average='weighted', pos_label=1):
     fpr, tpr, thresholds = roc_curve(y_true, y)
 
     scores = []
     for thresh in thresholds:
-        scores.append(f1_score(y_true, [m <= thresh for m in y], average='weighted'))
+        scores.append(f1_score(y_true, [m <= thresh for m in y], average=average, pos_label=pos_label))
 
     scores = np.array(scores)
     max_score = scores.max()
@@ -103,13 +103,29 @@ _, mask_thr = set_threshold(labels['dev'], mask_distances['dev'])
 
 f1_scores = list()
 mask_f1_scores = list()
+f1_scores_label1 = list()
+mask_f1_scores_label1 = list()
+f1_scores_label0 = list()
+mask_f1_scores_label0 = list()
+
 for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
     f1 = f1_score(labels[data_set], [m <= thr for m in distances[data_set]], average='weighted')
     f1_scores.append(f1)
     f1 = f1_score(labels[data_set], [m <= mask_thr for m in mask_distances[data_set]], average='weighted')
     mask_f1_scores.append(f1)
 
-header = ['model'] + [f'{data_set}-{column}' for data_set in ['train', 'test.iov', 'test.oov', 'dev'] for column in ['spearman_corr', 'spearman_pvalue', 'pearson_corr', 'pearson_pvalue', 'f1_score']] + ['thr']
+    f1 = f1_score(labels[data_set], [m <= thr for m in distances[data_set]], average='binary', pos_label=1)
+    f1_scores_label1.append(f1)
+    f1 = f1_score(labels[data_set], [m <= mask_thr for m in mask_distances[data_set]], average='binary', pos_label=1)
+    mask_f1_scores_label1.append(f1)
+
+    f1 = f1_score(labels[data_set], [m <= thr for m in distances[data_set]], average='binary', pos_label=0)
+    f1_scores_label0.append(f1)
+    f1 = f1_score(labels[data_set], [m <= mask_thr for m in mask_distances[data_set]], average='binary', pos_label=0)
+    mask_f1_scores_label0.append(f1)
+    
+
+header = ['model'] + [f'{data_set}-{column}' for data_set in ['train', 'test.iov', 'test.oov', 'dev'] for column in ['spearman_corr', 'spearman_pvalue', 'pearson_corr', 'pearson_pvalue', 'f1_score', 'f1_scores_label1', 'f1_scores_label0']] + ['thr']
 header = "\t".join(header)
 
 stats_file = "TRiC-stats.tsv"
@@ -118,8 +134,8 @@ if not Path(stats_file).is_file():
 else:
     lines = open(stats_file, mode='r',encoding='utf-8').readlines()
 
-lines.append(f'{model_name}\t' + "\t".join([f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}' for i in range(4)]) + f'\t{thr}\n')
-lines.append(f'{model_name}_mask\t' + "\t".join([f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}' for i in range(4)]) + f'\t{mask_thr}\n')
+lines.append(f'{model_name}\t' + "\t".join([f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}\t{f1_scores_label0[i]}\t{f1_scores_label1[i]}' for i in range(4)]) + f'\t{thr}\n')
+lines.append(f'{model_name}_mask\t' + "\t".join([f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}\t{mask_f1_scores_label1[i]}\t{mask_f1_scores_label0[i]}' for i in range(4)]) + f'\t{mask_thr}\n')
 
 with open(stats_file, mode='w', encoding='utf-8') as f:
     f.writelines(lines)

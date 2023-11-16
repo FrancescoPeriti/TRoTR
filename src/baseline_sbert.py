@@ -13,8 +13,9 @@ from sklearn.metrics import (precision_recall_fscore_support, classification_rep
 from collections import namedtuple
 from scipy.stats import spearmanr
 from torch.utils.data import DataLoader
+from sentence_transformers.models import Dropout
 from sentence_transformers import SentenceTransformer, models, losses, InputExample, CrossEncoder
-from sentence_transformers.evaluation import BinaryClassificationEvaluator
+from sentence_transformers.evaluation import BinaryClassificationEvaluator, EmbeddingSimilarityEvaluator
 from sentence_transformers.cross_encoder.evaluation import CECorrelationEvaluator
 import torch
 import random
@@ -29,18 +30,18 @@ def set_seed(seed: int = 42) -> None:
 class Baseline:
 
     def __init__(self,args):
-        self.lr = args.lr
-        self.n_epochs = args.n_epochs
-        self.batch_size = args.batch_size
+        self.lr = float(args.lr)
+        self.n_epochs = int(args.n_epochs)
+        self.batch_size = int(args.batch_size)
         self.device = args.device
-        self.weight_decay = args.weight_decay
+        self.weight_decay = float(args.weight_decay)
         self.output_path = args.output_path
         self.do_validation = args.do_validation
         self.train_path = args.train_path
         self.dev_path = args.dev_path
         self.pretrained_model = args.pretrained_model
-        self.max_seq_length = args.max_seq_length
-        self.warmup_percentage = args.warmup_percentage
+        self.max_seq_length = int(args.max_seq_length)
+        self.warmup_percentage = float(args.warmup_percentage)
         self.add_tags = args.add_tags
         self.loss = args.loss
         self.evaluation = args.evaluation
@@ -48,6 +49,7 @@ class Baseline:
         self.sbert_pretrained_model = args.sbert_pretrained_model
         self.pretrained_model = args.pretrained_model
         self.model_type = args.model_type
+        self.remove_sentence = args.remove_sentence
 
 
     def load_data(self, path, return_sentences=False, return_inputs=False):
@@ -68,6 +70,15 @@ class Baseline:
 
                     new_sentence1 = sentence1[:start1] + '<t>' + sentence1[start1:end1] + '</t>' + sentence1[end1:]
                     new_sentence2 = sentence2[:start2] + '<t>' + sentence2[start2:end2] + '</t>' + sentence2[end2:]
+
+                elif self.remove_sentence:
+                    start1, end1 = line['indices_target_token1'].split(':')
+                    start2, end2 = line['indices_target_token2'].split(':')
+                    start1, end1 = int(start1), int(end1)
+                    start2, end2 = int(start2), int(end2)
+
+                    new_sentence1 = sentence1[:start1] + sentence1[end1:]
+                    new_sentence2 = sentence2[:start2] + sentence2[end2:]
 
                 else:
                     new_sentence1 = sentence1
@@ -112,13 +123,19 @@ class Baseline:
                 word_embedding_model.tokenizer.add_tokens(tokens, special_tokens=True)
                 word_embedding_model.auto_model.resize_token_embeddings(len(word_embedding_model.tokenizer))
             pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension())
-            self.model = SentenceTransformer(modules=[word_embedding_model, pooling_model], device=self.device)
+            if self.dropout:
+                self.model = SentenceTransformer(modules=[word_embedding_model, pooling_model], device=self.device)
+            else:
+                self.model = SentenceTransformer(modules=[word_embedding_model, pooling_model, Dropout(0.2)], device=self.device)
 
         if self.loss == 'contrastive':
             self.train_loss = losses.ContrastiveLoss(self.model)
 
         if self.loss == 'mse':
             self.train_loss = losses.MSELoss(self.model)
+
+        if self.loss == 'cosine':
+            self.train_loss = losses.CosineSimilarityLoss(self.model)
 
 
     def train(self):
@@ -153,8 +170,12 @@ class Baseline:
             evaluator = BinaryClassificationEvaluator(dev_sentences[0], dev_sentences[1], dev_labels)
 
         if self.evaluation == 'correlation':
-            dev_sentences, dev_labels = self.load_data(self.dev_path, return_inputs=True)
-            evaluator = CECorrelationEvaluator(dev_sentences, dev_labels)
+            if self.model_type=='crossencoder':
+                dev_sentences, dev_labels = self.load_data(self.dev_path, return_inputs=True)
+                evaluator = CECorrelationEvaluator(dev_sentences, dev_labels)
+            else:
+                dev_sentences, dev_labels = self.load_data(self.dev_path, return_sentences=True)
+                evaluator = EmbeddingSimilarityEvaluator(dev_sentences[0], dev_sentences[1], dev_labels)
 
         if self.model_type == 'siamese':
             self.model.fit(
@@ -242,8 +263,9 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size', default=16)
     parser.add_argument('--weight_decay', default=0.0)
     parser.add_argument('--warmup_percentage', default=0.01)
-    parser.add_argument('--loss', default="contrastive", choices=['ce', 'mse', 'contrastive'])
-    parser.add_argument('--add_tags', default=True)
+    parser.add_argument('--loss', default="contrastive", choices=['ce', 'mse', 'cosine', 'contrastive'])
+    parser.add_argument('--add_tags', action="store_true")
+    parser.add_argument('--remove_sentence', action="store_true")
     parser.add_argument('--device', default='cuda')
     parser.add_argument('--train_path', default="")
     parser.add_argument('--evaluation', default="binary")
@@ -253,10 +275,11 @@ if __name__ == "__main__":
     parser.add_argument('--model_type', default="siamese")
     parser.add_argument('--do_validation', default=True)
     parser.add_argument('--output_path', default='models')
-    parser.add_argument('--finetune_sbert', default=False)
+    parser.add_argument('--finetune_sbert', action="store_true")
     parser.add_argument('--pretrained_model', default='roberta-large')
     parser.add_argument('--sbert_pretrained_model', default='paraphrase-multilingual-mpnet-base-v2')
     parser.add_argument('--max_seq_length', default=512)
+    parser.add_argument('--dropout', action="store_true")
 
 
     args = parser.parse_args()
