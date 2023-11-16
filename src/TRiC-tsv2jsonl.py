@@ -97,7 +97,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Random sampling', add_help=True)
     parser.add_argument('-a', '--annotators',
                         type=str,
-                        default='Nisha AndreaMariaC', #iosakwe shur
+                        default='Nisha AndreaMariaC iosakwe shur',
                         help='Annotators')
     parser.add_argument('-f', '--filename',
                         type=str,
