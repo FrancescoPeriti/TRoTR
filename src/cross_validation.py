@@ -132,10 +132,15 @@ if __name__ == '__main__':
     del df['annotator']
     df = df.groupby([c for c in df.columns.values if c != 'label']).mean().reset_index()
 
+    # processing: remove every pair with an average judgment between 2 and 3
+    tmp = df.copy()
+    tmp['label'] = [0 if i <= 2 else i for i in tmp['label']]
+    tmp['label'] = [1 if i >= 3 else i for i in tmp['label']]
+    tmp = tmp[tmp['label'].isin([0, 1])]
+    df = df[df.instanceID.isin(tmp.instanceID.values)]
+
     if args.subtask == 'binary':
-        df['label'] = [0 if i <= 2 else i for i in df['label']]
-        df['label'] = [1 if i >= 3 else i for i in df['label']]
-        df = df[df['label'].isin([0,1])]
+        df = tmp.copy()
 
     lemmas = df['lemma'].unique()
 
