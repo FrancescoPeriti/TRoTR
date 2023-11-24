@@ -161,6 +161,7 @@ if __name__ == '__main__':
         test_in = train.loc[n_example_fold//2: n_example_fold]  # 0.5 % of data from in-vocabulary
         train = train.loc[n_example_fold:] # from 0.9% of data to 0.8% of data
         dev = pd.concat([dev_in, dev_out]) # from 0.5% of data to 10% of data (0.5% out-of-vocabulary, 0.5% in-of-vocabulary)
+        test = pd.concat([test_in, test_out])
 
         print(f'FOLD {fold}')
         print('-- Train:', train.shape[0], '--')
@@ -181,11 +182,13 @@ if __name__ == '__main__':
         dev_lbl = split_rows(dev)
         dev_lbl_in = split_rows(dev_in)
         dev_lbl_out = split_rows(dev_out)
+        test_lbl = split_rows(test)
         test_lbl_in = split_rows(test_in)
         test_lbl_out = split_rows(test_out)
 
         for k, v in {'train': (train,train_lbl),
                      'dev':(dev, dev_lbl),
+                     'test': (test, test_lbl),
                      'test.iov': (test_in, test_lbl_in),
                      'test.oov': (test_out, test_lbl_out),
                      'dev.iov': (dev_in, dev_lbl_in),
