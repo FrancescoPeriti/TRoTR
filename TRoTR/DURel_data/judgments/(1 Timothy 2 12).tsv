@@ -41,6 +41,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 8_(1 Timothy 2:12)-c2	2_(1 Timothy 2:12)-c2	iosakwe	2.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 8_(1 Timothy 2:12)-c2	2_(1 Timothy 2:12)-c2	AndreaMariaC	3.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 8_(1 Timothy 2:12)-c2	2_(1 Timothy 2:12)-c2	shur	3.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
+8_(1 Timothy 2:12)-c2	2_(1 Timothy 2:12)-c2	Nisha	0.0	They are related but mean the opposite	But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 4_(1 Timothy 2:12)-c1	2_(1 Timothy 2:12)-c2	AndreaMariaC	3.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 4_(1 Timothy 2:12)-c1	2_(1 Timothy 2:12)-c2	shur	3.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 4_(1 Timothy 2:12)-c1	2_(1 Timothy 2:12)-c2	Nisha	3.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
@@ -475,6 +476,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 0_(1 Timothy 2:12)-c2	11_(1 Timothy 2:12)-c2	iosakwe	2.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 0_(1 Timothy 2:12)-c2	11_(1 Timothy 2:12)-c2	AndreaMariaC	1.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 0_(1 Timothy 2:12)-c2	11_(1 Timothy 2:12)-c2	shur	3.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
+0_(1 Timothy 2:12)-c2	11_(1 Timothy 2:12)-c2	Nisha	0.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 10_(1 Timothy 2:12)-c1	11_(1 Timothy 2:12)-c2	iosakwe	4.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 10_(1 Timothy 2:12)-c1	11_(1 Timothy 2:12)-c2	AndreaMariaC	4.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	
 10_(1 Timothy 2:12)-c1	11_(1 Timothy 2:12)-c2	shur	4.0		But_I_suffer_not_a_woman_to_teach_nor_to_usurp_authority	

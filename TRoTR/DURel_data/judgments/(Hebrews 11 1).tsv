@@ -60,6 +60,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 112_(Hebrews 11:1)-c1	112_(Hebrews 11:1)-c2	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 112_(Hebrews 11:1)-c1	112_(Hebrews 11:1)-c2	shur	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c1	112_(Hebrews 11:1)-c2	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+106_(Hebrews 11:1)-c1	112_(Hebrews 11:1)-c2	shur	0.0	"1 - unclear what is natural - faith?--2 - believing and faith are different things"	Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c1	112_(Hebrews 11:1)-c2	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c2	117_(Hebrews 11:1)-c1	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c2	117_(Hebrews 11:1)-c1	AndreaMariaC	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
@@ -122,23 +123,32 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 114_(Hebrews 11:1)-c2	108_(Hebrews 11:1)-c2	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 114_(Hebrews 11:1)-c2	108_(Hebrews 11:1)-c2	shur	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+119_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	shur	0.0	2 - what is 'it'?	Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 114_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+114_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 114_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 107_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 107_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+107_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 115_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 115_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+115_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 115_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 115_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+115_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 107_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 107_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+107_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 111_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 111_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	AndreaMariaC	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+111_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 109_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+109_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 109_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+119_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c2	118_(Hebrews 11:1)-c1	AndreaMariaC	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c2	118_(Hebrews 11:1)-c1	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 119_(Hebrews 11:1)-c2	118_(Hebrews 11:1)-c1	shur	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
@@ -162,6 +172,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 117_(Hebrews 11:1)-c1	118_(Hebrews 11:1)-c1	shur	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c1	118_(Hebrews 11:1)-c1	AndreaMariaC	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c1	118_(Hebrews 11:1)-c1	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+106_(Hebrews 11:1)-c1	118_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 108_(Hebrews 11:1)-c1	118_(Hebrews 11:1)-c1	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 108_(Hebrews 11:1)-c1	118_(Hebrews 11:1)-c1	Nisha	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 108_(Hebrews 11:1)-c1	118_(Hebrews 11:1)-c1	shur	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
@@ -170,6 +181,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 119_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c2	shur	4.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c2	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c2	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+106_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c2	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c2	Nisha	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c2	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c2	shur	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
@@ -211,6 +223,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 114_(Hebrews 11:1)-c2	109_(Hebrews 11:1)-c1	shur	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c2	109_(Hebrews 11:1)-c1	Nisha	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c2	109_(Hebrews 11:1)-c1	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+106_(Hebrews 11:1)-c2	109_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c2	109_(Hebrews 11:1)-c1	AndreaMariaC	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c2	109_(Hebrews 11:1)-c1	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c2	109_(Hebrews 11:1)-c1	shur	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
@@ -309,6 +322,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 112_(Hebrews 11:1)-c1	116_(Hebrews 11:1)-c1	Nisha	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c2	110_(Hebrews 11:1)-c1	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 106_(Hebrews 11:1)-c2	110_(Hebrews 11:1)-c1	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+106_(Hebrews 11:1)-c2	110_(Hebrews 11:1)-c1	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c1	110_(Hebrews 11:1)-c1	AndreaMariaC	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c1	110_(Hebrews 11:1)-c1	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c1	110_(Hebrews 11:1)-c1	shur	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
@@ -398,15 +412,21 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 117_(Hebrews 11:1)-c1	115_(Hebrews 11:1)-c2	shur	4.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	Nisha	1.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 113_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	AndreaMariaC	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+113_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 115_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	AndreaMariaC	4.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 115_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	Nisha	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+115_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 118_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c2	Nisha	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 118_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c2	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+118_(Hebrews 11:1)-c2	106_(Hebrews 11:1)-c2	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 107_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	AndreaMariaC	4.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+107_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 107_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 117_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 117_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	Nisha	2.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+117_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 108_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	AndreaMariaC	4.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
+108_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	shur	0.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 108_(Hebrews 11:1)-c1	106_(Hebrews 11:1)-c2	Nisha	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 115_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c1	AndreaMariaC	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	
 115_(Hebrews 11:1)-c2	105_(Hebrews 11:1)-c1	Nisha	3.0		Now_faith_is_confidence_in_what_we_hope_for_and_assurance_about_what_we_do_not_see	

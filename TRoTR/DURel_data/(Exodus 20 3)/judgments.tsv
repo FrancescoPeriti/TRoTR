@@ -1,5 +1,6 @@
 identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 90_(Exodus 20:3)-c1	103_(Exodus 20:3)-c1	AndreaMariaC	2.0		You_shall_have_no_other_gods_before_me	
+90_(Exodus 20:3)-c1	103_(Exodus 20:3)-c1	shur	0.0	"1 - first 5 commandments - a source text--2 - refusing homosexual marriage?"	You_shall_have_no_other_gods_before_me	
 90_(Exodus 20:3)-c1	103_(Exodus 20:3)-c1	Nisha	1.0		You_shall_have_no_other_gods_before_me	
 94_(Exodus 20:3)-c1	103_(Exodus 20:3)-c1	AndreaMariaC	2.0		You_shall_have_no_other_gods_before_me	
 94_(Exodus 20:3)-c1	103_(Exodus 20:3)-c1	shur	1.0		You_shall_have_no_other_gods_before_me	
@@ -395,6 +396,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 100_(Exodus 20:3)-c1	93_(Exodus 20:3)-c1	Nisha	4.0		You_shall_have_no_other_gods_before_me	
 100_(Exodus 20:3)-c1	93_(Exodus 20:3)-c1	shur	4.0		You_shall_have_no_other_gods_before_me	
 91_(Exodus 20:3)-c1	93_(Exodus 20:3)-c1	AndreaMariaC	2.0		You_shall_have_no_other_gods_before_me	
+91_(Exodus 20:3)-c1	93_(Exodus 20:3)-c1	shur	0.0		You_shall_have_no_other_gods_before_me	
 91_(Exodus 20:3)-c1	93_(Exodus 20:3)-c1	Nisha	3.0		You_shall_have_no_other_gods_before_me	
 100_(Exodus 20:3)-c2	93_(Exodus 20:3)-c1	AndreaMariaC	2.0		You_shall_have_no_other_gods_before_me	
 100_(Exodus 20:3)-c2	93_(Exodus 20:3)-c1	Nisha	2.0		You_shall_have_no_other_gods_before_me	
@@ -418,7 +420,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 100_(Exodus 20:3)-c1	97_(Exodus 20:3)-c2	Nisha	2.0		You_shall_have_no_other_gods_before_me	
 100_(Exodus 20:3)-c1	97_(Exodus 20:3)-c2	shur	2.0		You_shall_have_no_other_gods_before_me	
 100_(Exodus 20:3)-c2	97_(Exodus 20:3)-c2	AndreaMariaC	2.0		You_shall_have_no_other_gods_before_me	
-100_(Exodus 20:3)-c2	97_(Exodus 20:3)-c2	shur	2.0	"""1 - why was it not a sin to worship Jesus?--2 - how many will not go to heaven bc of the 'no other gods' commandment?"""	You_shall_have_no_other_gods_before_me	
+100_(Exodus 20:3)-c2	97_(Exodus 20:3)-c2	shur	2.0	"1 - why was it not a sin to worship Jesus?--2 - how many will not go to heaven bc of the 'no other gods' commandment?"	You_shall_have_no_other_gods_before_me	
 100_(Exodus 20:3)-c2	97_(Exodus 20:3)-c2	Nisha	2.0		You_shall_have_no_other_gods_before_me	
 98_(Exodus 20:3)-c2	97_(Exodus 20:3)-c2	AndreaMariaC	2.0		You_shall_have_no_other_gods_before_me	
 98_(Exodus 20:3)-c2	97_(Exodus 20:3)-c2	Nisha	1.0		You_shall_have_no_other_gods_before_me	

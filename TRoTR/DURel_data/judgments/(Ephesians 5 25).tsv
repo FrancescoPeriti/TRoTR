@@ -10,6 +10,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 446_(Ephesians 5:25)-c1	444_(Ephesians 5:25)-c2	shur	4.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	444_(Ephesians 5:25)-c2	AndreaMariaC	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	444_(Ephesians 5:25)-c2	Nisha	1.0		Husbands_love_your_wives_as_Christ_loved_the_church	
+442_(Ephesians 5:25)-c1	444_(Ephesians 5:25)-c2	shur	0.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 447_(Ephesians 5:25)-c2	444_(Ephesians 5:25)-c2	shur	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 447_(Ephesians 5:25)-c2	444_(Ephesians 5:25)-c2	AndreaMariaC	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 447_(Ephesians 5:25)-c2	444_(Ephesians 5:25)-c2	Nisha	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
@@ -96,6 +97,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 444_(Ephesians 5:25)-c2	436_(Ephesians 5:25)-c2	shur	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	436_(Ephesians 5:25)-c2	AndreaMariaC	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	436_(Ephesians 5:25)-c2	Nisha	1.0		Husbands_love_your_wives_as_Christ_loved_the_church	
+442_(Ephesians 5:25)-c1	436_(Ephesians 5:25)-c2	shur	0.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 438_(Ephesians 5:25)-c2	436_(Ephesians 5:25)-c2	AndreaMariaC	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 438_(Ephesians 5:25)-c2	436_(Ephesians 5:25)-c2	shur	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 438_(Ephesians 5:25)-c2	436_(Ephesians 5:25)-c2	Nisha	1.0		Husbands_love_your_wives_as_Christ_loved_the_church	
@@ -134,6 +136,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 447_(Ephesians 5:25)-c2	447_(Ephesians 5:25)-c1	Nisha	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 445_(Ephesians 5:25)-c1	447_(Ephesians 5:25)-c1	AndreaMariaC	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 445_(Ephesians 5:25)-c1	447_(Ephesians 5:25)-c1	Nisha	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
+445_(Ephesians 5:25)-c1	447_(Ephesians 5:25)-c1	shur	0.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 443_(Ephesians 5:25)-c2	447_(Ephesians 5:25)-c1	AndreaMariaC	4.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 443_(Ephesians 5:25)-c2	447_(Ephesians 5:25)-c1	Nisha	4.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 443_(Ephesians 5:25)-c2	447_(Ephesians 5:25)-c1	shur	4.0		Husbands_love_your_wives_as_Christ_loved_the_church	
@@ -163,6 +166,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 441_(Ephesians 5:25)-c2	449_(Ephesians 5:25)-c2	Nisha	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	449_(Ephesians 5:25)-c2	Nisha	1.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	449_(Ephesians 5:25)-c2	AndreaMariaC	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
+442_(Ephesians 5:25)-c1	449_(Ephesians 5:25)-c2	shur	0.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 438_(Ephesians 5:25)-c1	449_(Ephesians 5:25)-c2	AndreaMariaC	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 438_(Ephesians 5:25)-c1	449_(Ephesians 5:25)-c2	Nisha	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 438_(Ephesians 5:25)-c1	449_(Ephesians 5:25)-c2	shur	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
@@ -243,6 +247,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 450_(Ephesians 5:25)-c2	447_(Ephesians 5:25)-c2	shur	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	447_(Ephesians 5:25)-c2	AndreaMariaC	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	447_(Ephesians 5:25)-c2	Nisha	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
+442_(Ephesians 5:25)-c1	447_(Ephesians 5:25)-c2	shur	0.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 440_(Ephesians 5:25)-c2	447_(Ephesians 5:25)-c2	Nisha	1.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 440_(Ephesians 5:25)-c2	447_(Ephesians 5:25)-c2	AndreaMariaC	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 440_(Ephesians 5:25)-c2	447_(Ephesians 5:25)-c2	shur	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
@@ -305,6 +310,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 441_(Ephesians 5:25)-c2	450_(Ephesians 5:25)-c2	shur	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	450_(Ephesians 5:25)-c2	AndreaMariaC	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	450_(Ephesians 5:25)-c2	Nisha	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
+442_(Ephesians 5:25)-c1	450_(Ephesians 5:25)-c2	shur	0.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 440_(Ephesians 5:25)-c2	450_(Ephesians 5:25)-c2	AndreaMariaC	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 440_(Ephesians 5:25)-c2	450_(Ephesians 5:25)-c2	Nisha	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 440_(Ephesians 5:25)-c2	450_(Ephesians 5:25)-c2	shur	1.0		Husbands_love_your_wives_as_Christ_loved_the_church	
@@ -397,6 +403,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 444_(Ephesians 5:25)-c1	437_(Ephesians 5:25)-c1	shur	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	443_(Ephesians 5:25)-c1	Nisha	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	443_(Ephesians 5:25)-c1	AndreaMariaC	3.0		Husbands_love_your_wives_as_Christ_loved_the_church	
+442_(Ephesians 5:25)-c1	443_(Ephesians 5:25)-c1	shur	0.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	450_(Ephesians 5:25)-c1	AndreaMariaC	2.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	450_(Ephesians 5:25)-c1	shur	1.0		Husbands_love_your_wives_as_Christ_loved_the_church	
 442_(Ephesians 5:25)-c1	450_(Ephesians 5:25)-c1	Nisha	1.0		Husbands_love_your_wives_as_Christ_loved_the_church	

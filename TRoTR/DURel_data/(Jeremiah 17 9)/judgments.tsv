@@ -10,6 +10,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 474_(Jeremiah 17:9)-c1	469_(Jeremiah 17:9)-c2	shur	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 474_(Jeremiah 17:9)-c2	469_(Jeremiah 17:9)-c2	Nisha	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 474_(Jeremiah 17:9)-c2	469_(Jeremiah 17:9)-c2	AndreaMariaC	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
+474_(Jeremiah 17:9)-c2	469_(Jeremiah 17:9)-c2	shur	0.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 479_(Jeremiah 17:9)-c2	469_(Jeremiah 17:9)-c2	AndreaMariaC	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 479_(Jeremiah 17:9)-c2	469_(Jeremiah 17:9)-c2	Nisha	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 479_(Jeremiah 17:9)-c2	469_(Jeremiah 17:9)-c2	shur	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
@@ -83,6 +84,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 470_(Jeremiah 17:9)-c2	473_(Jeremiah 17:9)-c2	Nisha	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 470_(Jeremiah 17:9)-c2	473_(Jeremiah 17:9)-c2	shur	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 472_(Jeremiah 17:9)-c1	473_(Jeremiah 17:9)-c2	AndreaMariaC	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
+472_(Jeremiah 17:9)-c1	473_(Jeremiah 17:9)-c2	shur	0.0	"1. christians/pastors should be self reflective about their faults--2. just the source"	The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 472_(Jeremiah 17:9)-c1	473_(Jeremiah 17:9)-c2	Nisha	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 480_(Jeremiah 17:9)-c2	468_(Jeremiah 17:9)-c2	AndreaMariaC	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 480_(Jeremiah 17:9)-c2	468_(Jeremiah 17:9)-c2	Nisha	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
@@ -220,6 +222,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 471_(Jeremiah 17:9)-c1	472_(Jeremiah 17:9)-c2	Nisha	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 471_(Jeremiah 17:9)-c1	472_(Jeremiah 17:9)-c2	shur	3.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 469_(Jeremiah 17:9)-c2	472_(Jeremiah 17:9)-c2	AndreaMariaC	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
+469_(Jeremiah 17:9)-c2	472_(Jeremiah 17:9)-c2	shur	0.0	"1 - calling for following one's heart.--2 - same quote, but what does the writer mean to communicate here?"	The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 469_(Jeremiah 17:9)-c2	472_(Jeremiah 17:9)-c2	Nisha	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 470_(Jeremiah 17:9)-c2	472_(Jeremiah 17:9)-c2	Nisha	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 470_(Jeremiah 17:9)-c2	472_(Jeremiah 17:9)-c2	AndreaMariaC	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
@@ -399,6 +402,7 @@ identifier1	identifier2	annotator	judgment	comment	lemma	timestamp
 473_(Jeremiah 17:9)-c1	466_(Jeremiah 17:9)-c1	Nisha	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 473_(Jeremiah 17:9)-c1	466_(Jeremiah 17:9)-c1	shur	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 480_(Jeremiah 17:9)-c1	466_(Jeremiah 17:9)-c1	AndreaMariaC	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
+480_(Jeremiah 17:9)-c1	466_(Jeremiah 17:9)-c1	shur	0.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 480_(Jeremiah 17:9)-c1	466_(Jeremiah 17:9)-c1	Nisha	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 474_(Jeremiah 17:9)-c2	466_(Jeremiah 17:9)-c1	AndreaMariaC	2.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
 474_(Jeremiah 17:9)-c2	466_(Jeremiah 17:9)-c1	shur	1.0		The_heart_is_deceitful_above_all_things_and_desperately_wicked;_who_can_know_it?	
