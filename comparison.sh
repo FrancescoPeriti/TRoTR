@@ -18,10 +18,10 @@ declare -a models=("all-mpnet-base-v2" "multi-qa-mpnet-base-dot-v1" "all-distilr
 for model in "${models[@]}"
 do
    echo "TRiC-sBERT (BiEncoder) - ${model}"
-   python src/TRiC-sBERT-BiEncoder.py --model "${model}" --batch_size "${batch_size}" --device cuda
+   #python src/TRiC-sBERT-BiEncoder.py --model "${model}" --batch_size "${batch_size}" --device cuda
 done
 
-python src/TRiC-sBERT-BiEncoder.py --model pigiModelDropout02 --batch_size "${batch_size}" --device cuda --add_tags
+#python src/TRiC-sBERT-BiEncoder.py --model CICCIO/model_2e-05_0.0 --batch_size "${batch_size}" --device cuda --add_tags
 python src/TRiC-sBERT-BiEncoder.py --model pigiModel --batch_size "${batch_size}" --device cuda --add_tags
 python src/TRiC-sBERT-BiEncoder.py --model pierluigic/xl-lexeme --batch_size "${batch_size}" --device cuda --add_tags
 

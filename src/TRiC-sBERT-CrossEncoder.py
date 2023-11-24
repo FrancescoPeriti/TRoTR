@@ -18,6 +18,7 @@ parser.add_argument('-m', '--model', type=str)
 parser.add_argument('-f')
 parser.add_argument('-b', '--batch_size', type=int, default=32)
 parser.add_argument('-d', '--device', type=str, default='cuda', choices=['cuda', 'cpu'])
+parser.add_argument('-f', '--k_fold', type=str, default='1')
 args = parser.parse_args()
 
 
@@ -39,6 +40,7 @@ def set_threshold(y_true, y):
 model_name = args.model
 batch_size = args.batch_size
 device = args.device
+k_fold = args.k_fold
 
 # sBERT model
 model = CrossEncoder(model_name, device=device)
@@ -52,8 +54,8 @@ distances = defaultdict(list)
 mask_distances = defaultdict(list)
 
 for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
-    lines = open(f'TRoTR/datasets/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
-    for i, row in enumerate(open(f'TRoTR/datasets/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
+    lines = open(f'TRoTR/datasets/FOLD_{k_fold}/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
+    for i, row in enumerate(open(f'TRoTR/datasets/FOLD_{k_fold}/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
         row = json.loads(row)
         start, end = [int(i) for i in row['indices_target_token'].split(':')]
         sentences[data_set].append(row['context'])

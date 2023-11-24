@@ -50,6 +50,7 @@ class Baseline:
         self.pretrained_model = args.pretrained_model
         self.model_type = args.model_type
         self.remove_sentence = args.remove_sentence
+        self.dropout = args.dropout
 
 
     def load_data(self, path, return_sentences=False, return_inputs=False):
@@ -123,7 +124,7 @@ class Baseline:
                 word_embedding_model.tokenizer.add_tokens(tokens, special_tokens=True)
                 word_embedding_model.auto_model.resize_token_embeddings(len(word_embedding_model.tokenizer))
             pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension())
-            if self.dropout:
+            if not self.dropout:
                 self.model = SentenceTransformer(modules=[word_embedding_model, pooling_model], device=self.device)
             else:
                 self.model = SentenceTransformer(modules=[word_embedding_model, pooling_model, Dropout(0.2)], device=self.device)
@@ -288,3 +289,5 @@ if __name__ == "__main__":
 
     b = Baseline(args)
     b.train()
+
+    
