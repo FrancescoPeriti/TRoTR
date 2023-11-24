@@ -2,10 +2,9 @@ import json
 import numpy as np
 from pathlib import Path
 from collections import defaultdict
-from sklearn.metrics import roc_curve
 from scipy.spatial.distance import cosine
 from scipy.stats import spearmanr, pearsonr
-from sklearn.metrics import f1_score, roc_curve, recall_score
+from sklearn.metrics import f1_score, roc_curve
 from sklearn.metrics import classification_report
 from sentence_transformers import SentenceTransformer
 
