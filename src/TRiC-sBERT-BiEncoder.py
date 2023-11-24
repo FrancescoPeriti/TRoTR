@@ -58,7 +58,8 @@ def load_sentence(row, add_tags):
         return row['context'][:start] + '<t>' + row['context'][start:end] + '</t>' + row['context'][end:]
 
 
-for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
+data_sets_evaluation = ['train', 'test', 'test.iov', 'test.oov', 'dev', 'dev.iov', 'dev.oov']
+for data_set in data_sets_evaluation:
     lines = open(f'{args.data_path}TRoTR/datasets/FOLD_{k_fold}/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
     for i, row in enumerate(open(f'{args.data_path}TRoTR/datasets/FOLD_{k_fold}/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
         row = json.loads(row)
@@ -85,7 +86,7 @@ pearson_corr, pearson_pvalue = list(), list()
 mask_spearman_corr, mask_spearman_pvalue = list(), list()
 mask_pearson_corr, mask_pearson_pvalue = list(), list()
 
-for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
+for data_set in data_sets_evaluation:
     corr, pvalue = spearmanr(scores[data_set], -np.array(distances[data_set])) # distance -> similarity
     spearman_corr.append(round(corr,3))
     spearman_pvalue.append(round(pvalue, 3))
@@ -118,7 +119,7 @@ mask_precision_label1 = list()
 precision_label0 = list()
 mask_precision_label0 = list()
 
-for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
+for data_set in data_sets_evaluation:
     f1 = f1_score(labels[data_set], [m <= thr for m in distances[data_set]], average='weighted')
     f1_scores.append(f1)
     f1 = f1_score(labels[data_set], [m <= mask_thr for m in mask_distances[data_set]], average='weighted')
@@ -157,7 +158,7 @@ for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
     #mask_f1_scores_label1.append(f1)
     
 
-header = ['model', 'k_fold'] + [f'{data_set}-{column}' for data_set in ['train', 'test.iov', 'test.oov', 'dev'] for column in ['spearman_corr', 'spearman_pvalue', 'pearson_corr', 'pearson_pvalue', 'f1_score', 'f1_scores_label1', 'f1_scores_label0', 'recall_label1', 'recall_label0', 'precision_label1', 'precision_label0']] + ['thr']
+header = ['model', 'k_fold'] + [f'{data_set}-{column}' for data_set in data_sets_evaluation for column in ['spearman_corr', 'spearman_pvalue', 'pearson_corr', 'pearson_pvalue', 'f1_score', 'f1_scores_label1', 'f1_scores_label0', 'recall_label1', 'recall_label0', 'precision_label1', 'precision_label0']] + ['thr']
 header = "\t".join(header)
 
 stats_file = "TRiC-stats.tsv"
@@ -166,8 +167,8 @@ if not Path(stats_file).is_file():
 else:
     lines = open(stats_file, mode='r',encoding='utf-8').readlines()
 
-lines.append(f'{model_name}\t{k_fold}\t' + "\t".join([f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}\t{f1_scores_label1[i]}\t{f1_scores_label0[i]}\t{recall_label1[i]}\t{recall_label0[i]}\t{precision_label1[i]}\t{precision_label0[i]}' for i in range(4)]) + f'\t{thr}\n')
-lines.append(f'{model_name}_mask\t{k_fold}\t' + "\t".join([f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}\t{mask_f1_scores_label1[i]}\t{mask_f1_scores_label0[i]}\t{mask_recall_label1[i]}\t{mask_recall_label0[i]}\t{mask_precision_label1[i]}\t{mask_precision_label0[i]}' for i in range(4)]) + f'\t{mask_thr}\n')
+lines.append(f'{model_name}\t{k_fold}\t' + "\t".join([f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}\t{f1_scores_label1[i]}\t{f1_scores_label0[i]}\t{recall_label1[i]}\t{recall_label0[i]}\t{precision_label1[i]}\t{precision_label0[i]}' for i in range(len(data_sets_evaluation))]) + f'\t{thr}\n')
+lines.append(f'{model_name}_mask\t{k_fold}\t' + "\t".join([f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}\t{mask_f1_scores_label1[i]}\t{mask_f1_scores_label0[i]}\t{mask_recall_label1[i]}\t{mask_recall_label0[i]}\t{mask_precision_label1[i]}\t{mask_precision_label0[i]}' for i in range(len(data_sets_evaluation))]) + f'\t{mask_thr}\n')
 
 with open(stats_file, mode='w', encoding='utf-8') as f:
     f.writelines(lines)
