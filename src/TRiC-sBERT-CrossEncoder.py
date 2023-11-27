@@ -11,11 +11,12 @@ from sentence_transformers import CrossEncoder
 import argparse
 
 parser = argparse.ArgumentParser(prog='BERT', description='Extract BERT embeddings')
+parser.add_argument('--add_tags', action='store_true')
+parser.add_argument('-p', '--data_path', type=str, default='')
 parser.add_argument('-m', '--model', type=str)
-parser.add_argument('-f')
 parser.add_argument('-b', '--batch_size', type=int, default=32)
 parser.add_argument('-d', '--device', type=str, default='cuda', choices=['cuda', 'cpu'])
-parser.add_argument('-f', '--k_fold', type=str, default='1')
+parser.add_argument('-k', '--k_fold', type=str, default='1')
 args = parser.parse_args()
 
 
@@ -50,13 +51,24 @@ mask_sentences = defaultdict(list)
 distances = defaultdict(list)
 mask_distances = defaultdict(list)
 
-for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
-    lines = open(f'TRoTR/datasets/FOLD_{k_fold}/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
-    for i, row in enumerate(open(f'TRoTR/datasets/FOLD_{k_fold}/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
+
+def load_sentence(row, add_tags):
+    if not add_tags:
+        return row['context']
+    else:
+        start, end = [int(i) for i in row['indices_target_token'].split(':')]
+        return row['context'][:start] + '<t>' + row['context'][start:end] + '</t>' + row['context'][end:]
+
+
+data_sets_evaluation = ['train', 'test', 'test.iov', 'test.oov', 'dev', 'dev.iov', 'dev.oov']
+for data_set in data_sets_evaluation:
+    lines = open(f'{args.data_path}TRoTR/datasets/FOLD_{k_fold}/line-by-line/{data_set}.ranking.jsonl', mode='r', encoding='utf-8').readlines()
+    for i, row in enumerate(open(f'{args.data_path}TRoTR/datasets/FOLD_{k_fold}/line-by-line/{data_set}.binary.jsonl', mode='r', encoding='utf-8')):
         row = json.loads(row)
         start, end = [int(i) for i in row['indices_target_token'].split(':')]
-        sentences[data_set].append(row['context'])
+        sentences[data_set].append(load_sentence(row, args.add_tags)) #row['context'])
         mask_sentences[data_set].append(row['context'][:start] + ' - ' + row['context'][end:])
+        
         if i % 2 == 0:
             labels[data_set].append(1-float(row['label'])) # distance -> similarity
             scores[data_set].append(float(json.loads(lines[i])['label']))
@@ -71,7 +83,7 @@ pearson_corr, pearson_pvalue = list(), list()
 mask_spearman_corr, mask_spearman_pvalue = list(), list()
 mask_pearson_corr, mask_pearson_pvalue = list(), list()
 
-for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
+for data_set in data_sets_evaluation:
     corr, pvalue = spearmanr(scores[data_set], distances[data_set])
     spearman_corr.append(corr.round(3))
     spearman_pvalue.append(pvalue.round(3))
@@ -104,7 +116,7 @@ mask_precision_label1 = list()
 precision_label0 = list()
 mask_precision_label0 = list()
 
-for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
+for data_set in data_sets_evaluation:
     f1 = f1_score(labels[data_set], [m <= thr for m in distances[data_set]], average='weighted')
     f1_scores.append(f1)
     f1 = f1_score(labels[data_set], [m <= mask_thr for m in mask_distances[data_set]], average='weighted')
@@ -142,7 +154,7 @@ for data_set in ['train', 'test.iov', 'test.oov', 'dev']:
     # f1 = f1_score(labels[data_set], [m <= mask_thr for m in mask_distances[data_set]], average='binary', pos_label=1)
     # mask_f1_scores_label1.append(f1)
 
-header = ['model', 'k_fold'] + [f'{data_set}-{column}' for data_set in ['train', 'test.iov', 'test.oov', 'dev'] for
+header = ['model', 'k_fold'] + [f'{data_set}-{column}' for data_set in data_sets_evaluation for
                                 column in
                                 ['spearman_corr', 'spearman_pvalue', 'pearson_corr', 'pearson_pvalue', 'f1_score',
                                  'f1_scores_label1', 'f1_scores_label0', 'recall_label1', 'recall_label0',
@@ -157,10 +169,10 @@ else:
 
 lines.append(f'{model_name}\t{k_fold}\t' + "\t".join([
                                                          f'{spearman_corr[i]}\t{spearman_pvalue[i]}\t{pearson_corr[i]}\t{pearson_pvalue[i]}\t{f1_scores[i]}\t{f1_scores_label1[i]}\t{f1_scores_label0[i]}\t{recall_label1[i]}\t{recall_label0[i]}\t{precision_label1[i]}\t{precision_label0[i]}'
-                                                         for i in range(4)]) + f'\t{thr}\n')
+                                                         for i in range(len(data_sets_evaluation))]) + f'\t{thr}\n')
 lines.append(f'{model_name}_mask\t{k_fold}\t' + "\t".join([
                                                               f'{mask_spearman_corr[i]}\t{mask_spearman_pvalue[i]}\t{mask_pearson_corr[i]}\t{mask_pearson_pvalue[i]}\t{mask_f1_scores[i]}\t{mask_f1_scores_label1[i]}\t{mask_f1_scores_label0[i]}\t{mask_recall_label1[i]}\t{mask_recall_label0[i]}\t{mask_precision_label1[i]}\t{mask_precision_label0[i]}'
-                                                              for i in range(4)]) + f'\t{mask_thr}\n')
+                                                              for i in range(len(data_sets_evaluation))]) + f'\t{mask_thr}\n')
 
 with open(stats_file, mode='w', encoding='utf-8') as f:
     f.writelines(lines)

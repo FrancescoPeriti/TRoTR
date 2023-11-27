@@ -130,18 +130,37 @@ if __name__ == '__main__':
 
     del df['comment']
     del df['annotator']
-    df = df.groupby([c for c in df.columns.values if c != 'label']).mean().reset_index()
+    #df = df.groupby([c for c in df.columns.values if c != 'label']).mean().reset_index()
 
-    # processing: remove every pair with an average judgment between 2 and 3
-    tmp = df.copy()
+    # processing: remove every pair with an average judgment between 2 and 3 and pair with max-min judgment > 1
+    # remove instances with judgment difference greater than 1
+    tmp = df[['instanceID', 'label']].groupby('instanceID').agg(['unique']).reset_index()
+    tmp[('label', 'unique')] = [max(i) - min(i) < 2 for i in tmp[('label', 'unique')]]
+    filtered_instances = tmp[tmp[('label', 'unique')]].instanceID.values
+    
+    # remove instances with avg judgment between 2 and 3
+    tmp = df[['instanceID', 'label']].groupby('instanceID').mean().reset_index()
     tmp['label'] = [0 if i <= 2 else i for i in tmp['label']]
     tmp['label'] = [1 if i >= 3 else i for i in tmp['label']]
-    tmp = tmp[tmp['label'].isin([0, 1])]
-    df = df[df.instanceID.isin(tmp.instanceID.values)]
+    tmp = tmp[(tmp['label'].isin([0,1])) & (tmp['instanceID'].isin(filtered_instances))]
+    filtered_instances = tmp.instanceID.values
+    
+    df = df[df.instanceID.isin(filtered_instances)]
 
+    df = df[['instanceID', 'dataID1', 'dataID2', 'label', 'lemma', 'context1', 'context2', 'indices_target_token1',
+             'indices_target_sentence1', 'indices_target_sentence2', 'indices_target_token2', 'dataIDs', 'label_set', 'non_label']].groupby(['instanceID', 
+                                                                                                                                             'dataID1', 'dataID2', 
+                                                                                                                                            'lemma',
+                                                                                                                                             'context1', 'context2', 
+                                                                                                                                             'indices_target_token1',
+                                                                                                                                             'indices_target_sentence1', 
+                                                                                                                                             'indices_target_sentence2',
+                                                                                                                                             'indices_target_token2', 'dataIDs', 'label_set', 'non_label']).mean().reset_index()
+    
     if args.subtask == 'binary':
-        df = tmp.copy()
-
+        df['label'] = [0 if i <= 2 else i for i in df['label']]
+        df['label'] = [1 if i >= 3 else i for i in df['label']]
+        
     lemmas = df['lemma'].unique()
 
     #Generating OUT Folds
