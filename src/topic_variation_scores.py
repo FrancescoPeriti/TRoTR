@@ -154,6 +154,7 @@ if __name__ == '__main__':
 
     # processing
     df['label'] = 1 - df['label'] / df['label'].values.max()
+    df = df.rename(columns={'label':'topic_variation'})
 
     Path('TRoTR/datasets/').mkdir(parents=True, exist_ok=True)
     df.sort_values('lemma').to_csv('TRoTR/datasets/trac_gold_scores.tsv', index=False)
