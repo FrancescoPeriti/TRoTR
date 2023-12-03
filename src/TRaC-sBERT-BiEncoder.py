@@ -107,8 +107,8 @@ if not Path(stats_file).is_file():
 else:
     lines = open(stats_file, mode='r',encoding='utf-8').readlines()
 
-lines.append(f'{model_name}\t' + f'{corr}\t{pvalue}\t{pearson_corr}\t{pearson_pvalue}')
-lines.append(f'{model_name}_mask\t' + f'{mask_corr}\t{mask_pvalue}\t{mask_pearson_corr}\t{mask_pearson_pvalue}')
+lines.append(f'{model_name}\t' + f'{corr}\t{pvalue}\t{pearson_corr}\t{pearson_pvalue}\n')
+lines.append(f'{model_name}_mask\t' + f'{mask_corr}\t{mask_pvalue}\t{mask_pearson_corr}\t{mask_pearson_pvalue}\n')
 
 with open(stats_file, mode='w', encoding='utf-8') as f:
     f.writelines(lines)
