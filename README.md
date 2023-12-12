@@ -8,7 +8,7 @@ Computational approaches for _detecting_ text reuse do not focus on capturing th
 
 - [Getting Started](#getting-started)
 - [Benchmark](#benchmark)
-- [Evaluation setting](#evaluation setting)
+- [Evaluation setting](#evaluation-setting)
 - [References](#references)
 
 ## Getting Started
