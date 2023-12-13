@@ -9,6 +9,7 @@ Computational approaches for _detecting_ text reuse do not focus on capturing th
 - [Getting Started](#getting-started)
 - [Benchmark](#benchmark)
 - [Evaluation setting](#evaluation-setting)
+- [Evaluation results](#evaluation-results)
 - [References](#references)
 
 ## Getting Started
@@ -23,11 +24,10 @@ To install the required packages, you can use pip:
 pip install -r requirements.txt
 ```
 
-## Benchmark
+## Benchmark 
 The ```TRoTR``` folder contains the data and labels of our benchmark.
 
 - ```TRoTR/raw_data.jsonl``` contains the tweets manually collected by Twitter (now X).
-- ```TRoTR/guidelines.md``` contains the instructions followed by human annotators.
 
 #### Tutorial
 We used the running version of the <a href='https://phitag.ims.uni-stuttgart.de/'>PhiTag annotation platform</a> to display the guidelines, tutorial and data to annotators.
@@ -37,8 +37,11 @@ Thus, our data adheres to the current format supported by PhiTag.
 
 Notably, the tutorial data were excluded in our work.
 
+#### Annotation guidelines
+- ```TRoTR/guidelines.md``` contains the instructions followed by human annotators.
+
 #### From raw_data.jsnol to PhiTag data
-For each target quotation $t$, we executed a random sampling of 150 unique context pairs $\langle t, c_1, c_2 \rangle$ without replacement from the full set of possible combinations. These were presented to annotators in randomized order to be judged for topic relatedness. 
+For each target quotation $t$, we randomly sampled of 150 unique context pairs $\langle t, c_1, c_2 \rangle$ without replacement from the full set of possible combinations. These were presented to annotators in randomized order to be judged for topic relatedness. 
 
 To convert the ```TRoTR/raw_data.jsnol``` dataset into PhiTag format and implement random sampling of the context pairs $\langle t, c_1, c_2 \rangle$, we used the following command:
 
@@ -60,8 +63,12 @@ To join the uses and judgments files of different rounds into two comphrensive f
 python src/merge-round.py
 ```
 
+These produces two comphrensive files:
+- ```TRoTR/round/TRoTR.tsv``
+- ```TRoTR/judgments/TRoTR.tsv``
+
 #### Statistics
-We computed inter-annotator agreemen by using the ```stats+DURel.ipynb notebook```.
+We computed inter-annotator agreements by using the ```stats+DURel.ipynb notebook```.
 
 ## Evaluation setting
 ##### TRiC
@@ -72,23 +79,39 @@ python src/cross_validation.py -s binary --n_folds 10
 python src/cross_validation.py -s ranking --n_folds 10
 ```
 This command results in 10 different sub-folders under the folder ```TRoTR/datasets/```. In particular, each folder contains the data in two formats: 
-1. line-by-line: the contexts of a pair are represented the one under the other in a different line.
+1. line-by-line: the contexts of a pair are represented one below the other on separate lines.
 2. pair-by-line: the contexts of a pair are represented in the same line.
 
 We used format 2, but we make available the same data also in the format 1.
 
-Both format sub-folders contains the data for the Train-Test-Dev split.
+Both format sub-folders contain the data for the Train-Test-Dev splits.
 
 ##### TRaC
-Our TRaC evaluation was conducted on the full set of data. To generate ground truth data, we use the following command:
+Our TRaC evaluation was conducted on the full set of data. To generate ground truth data, we used the following command:
 
 ```
 python src/topic_variation_scores.py
 ```
 
+To generate benchmark data for TRaC, we used the following command:
+
+```
+python src/TRaC_dataset_generation.py
+```
 
 ## Fine-tuning
 
+## Evaluation result
+For evaluation results, we used three scripts:
+- ```src/TRiC-sBERT-BiEncoder.py```: for testing Bi-Encoder models on TRiC
+- ```src/TRiC-sBERT-CrossEncoder.py```: for testing Cross-Encoder models on TRiC
+- ```src/TRiC-sBERT-BiEncoder.py```: for testing Bi-Encoder models on TRaC
+
+In particular, you can easily use the following bash command to call the three previous scripts and evaluate different models on both TRiC and TRaC.
+
+```bash sequence-model-evaluation.sh```
+
+This will create ```TRiC-stats.tsv``` and ```TRaC-stats.tsv`` files containing performance for different metrics and partitions.
 
 ## References
 ...
