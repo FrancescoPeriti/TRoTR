@@ -1,5 +1,7 @@
 # TRoTR: Topic Relatedness of Text Reuse
-This is the official repository for our paper _TRoTR: A Framework for Evaluating the Re-contextualization of Text Reuse_
+This is the official repository for our paper _TRoTR: A Framework for Evaluating the Re-contextualization of Text Reuse_ .
+
+Below, you will find instructions to reproduce our study. Feel free to contact us!
 
 ## Abstract
 Computational approaches for _detecting_ text reuse do not focus on capturing the change between the original context of the reused text and their _re-contextualization_. In this paper, we rely on the notion of topic relatedness and propose a framework called __Topic Relatedness of Text Reuse (TRoTR)__ for evaluating the diachronic change of context in which text is reused. __TRoTR__ includes two NLP tasks: Text Reuse in-Context (TRiC) and Topic variation Ranking across Corpus (TRaC). TRiC is designed to evaluate the _topic relatedness_ between a pair of re-contextualizations. TRaC is designed to evaluate the overall topic variation within a set of re-contextualizations. We also provide a curated __TRoTR__ benchmark of biblical text reuse, human-annotated with topic relatedness. The benchmark exhibits a inter-annotator agreement of .811, calculated by average pair-wise correlation on assigned judgments. Finally, we evaluate multiple, established Sentence-BERT models on the __TRoTR__ tasks and find that they exhibit greater sensitivity to semantic similarity than topic relatedness. Our experiments show that fine-tuning these models can mitigate such a kind of sensitivity.
@@ -111,7 +113,7 @@ In particular, you can easily use the following bash command to call the three p
 
 ```bash sequence-model-evaluation.sh```
 
-This will create ```TRiC-stats.tsv``` and ```TRaC-stats.tsv`` files containing performance for different metrics and partitions.
+This will create ```TRiC-stats.tsv``` and ```TRaC-stats.tsv``` files containing performance for different metrics and partitions.
 
 ## References
 ...
