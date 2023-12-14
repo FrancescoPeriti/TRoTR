@@ -114,7 +114,7 @@ sh finetuning.sh
 For evaluation results, we used three scripts:
 - ```src/TRiC-sBERT-BiEncoder.py```: for testing Bi-Encoder models on TRiC
 - ```src/TRiC-sBERT-CrossEncoder.py```: for testing Cross-Encoder models on TRiC
-- ```src/TRiC-sBERT-BiEncoder.py```: for testing Bi-Encoder models on TRaC
+- ```src/TRaC-sBERT-BiEncoder.py```: for testing Bi-Encoder models on TRaC
 
 In particular, you can easily use the following bash command to call the three previous scripts and evaluate different models on both TRiC and TRaC.
 
