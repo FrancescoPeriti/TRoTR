@@ -66,8 +66,8 @@ python src/merge-round.py
 ```
 
 These produces two comphrensive files:
-- ```TRoTR/round/TRoTR.tsv``
-- ```TRoTR/judgments/TRoTR.tsv``
+- ```TRoTR/round/TRoTR.tsv```
+- ```TRoTR/judgments/TRoTR.tsv```
 
 #### Statistics
 We computed inter-annotator agreements by using the ```stats+DURel.ipynb notebook```.
