@@ -9,7 +9,7 @@ do
 	do
 		for lr in "${lrs[@]}";
 		do
-			python3 baseline_sbert.py --train_path='/mimer/NOBACKUP/groups/cik_data/NAACL24/TRoTR/datasets/FOLD_'$fold'/pair-by-line/train.binary.jsonl' --dev_path='/mimer/NOBACKUP/groups/cik_data/NAACL24/TRoTR/datasets/FOLD_'$fold'/pair-by-line/dev.oov.ranking.jsonl' --loss 'contrastive' --finetune_sbert --model_type "siamese" --sbert_pretrained_model $model --evaluation "correlation" --lr $lr --weight_decay 0 --output_path "models/"$model'_'$fold
+			python3 baseline_sbert.py --train_path='TRoTR/datasets/FOLD_'$fold'/pair-by-line/train.binary.jsonl' --dev_path='TRoTR/datasets/FOLD_'$fold'/pair-by-line/dev.oov.ranking.jsonl' --loss 'contrastive' --finetune_sbert --model_type "siamese" --sbert_pretrained_model $model --evaluation "correlation" --lr $lr --weight_decay 0 --output_path "models/"$model'_'$fold
 		done
 	done
 done
