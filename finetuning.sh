@@ -1,9 +1,3 @@
-#!/bin/bash
-#SBATCH -A NAISS2023-5-119 -p alvis
-#SBATCH -t 24:00:00
-#SBATCH --gpus-per-node=T4:1
-
-
 declare models=("all-distilroberta-v1" "multi-qa-mpnet-base-cos-v1" "paraphrase-multilingual-mpnet-base-v2" "distiluse-base-multilingual-cased-v1" "paraphrase-multilingual-MiniLM-L12-v2")
 declare folds=(1 2 3 4 5 6 7 8 9 10)
 declare lrs=(1e-6 2e-6 5e-6 1e-5 2e-5)
