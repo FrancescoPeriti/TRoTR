@@ -106,7 +106,7 @@ python src/TRaC_dataset_generation.py
 To fine-tune the models used in our study, you can use the specific bash script:
 
 ```
-sh finetuning.sh
+bash finetuning.sh
 ```
 
 
