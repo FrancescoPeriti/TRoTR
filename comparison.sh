@@ -1,8 +1,4 @@
 #!/bin/sh
-#SBATCH -A NAISS2023-5-119 -p alvis
-#SBATCH -N 1 --gpus-per-node=A40:1
-#SBATCH -t 2-00:00:00
-
 batch_size=32
 declare -a k_folds=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
 declare -a bert_models=("bert-base-uncased" "bert-base-multilingual-uncased" "bert-large-uncased")
