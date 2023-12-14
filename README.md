@@ -103,6 +103,13 @@ python src/TRaC_dataset_generation.py
 
 ## Fine-tuning
 
+To fine-tune the models used in our study, you can use the specific bash script:
+
+```
+sh finetuning.sh
+```
+
+
 ## Evaluation result
 For evaluation results, we used three scripts:
 - ```src/TRiC-sBERT-BiEncoder.py```: for testing Bi-Encoder models on TRiC
