@@ -1,7 +1,6 @@
-declare models=("all-distilroberta-v1" "multi-qa-mpnet-base-cos-v1" "paraphrase-multilingual-mpnet-base-v2" "distiluse-base-multilingual-cased-v1" "paraphrase-multilingual-MiniLM-L12-v2")
-declare folds=(1 2 3 4 5 6 7 8 9 10)
-declare lrs=(1e-6 2e-6 5e-6 1e-5 2e-5)
-
+declare -a models=("all-distilroberta-v1" "multi-qa-mpnet-base-cos-v1" "paraphrase-multilingual-mpnet-base-v2" "distiluse-base-multilingual-cased-v1" "paraphrase-multilingual-MiniLM-L12-v2")
+declare -a folds=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
+declare -a lrs=(1e-6 2e-6 5e-6 1e-5 2e-5)
 
 for model in "${models[@]}";
 do
@@ -13,8 +12,3 @@ do
 		done
 	done
 done
-
-
-
-
-
