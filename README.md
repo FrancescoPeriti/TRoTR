@@ -1,5 +1,5 @@
 # TRoTR: Topic Relatedness of Text Reuse
-This is the official repository for our paper _TRoTR: A Framework for Evaluating the Re-contextualization of Text Reuse_ .
+This is the official repository for our paper [_TRoTR: A Framework for Evaluating the Re-contextualization of Text Reuse_](https://aclanthology.org/2024.emnlp-main.774/) .
 
 Below, you will find instructions to reproduce our study. Feel free to contact us!
 
