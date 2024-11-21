@@ -123,4 +123,17 @@ In particular, you can easily use the following bash command to call the three p
 This will create ```TRiC-stats.tsv``` and ```TRaC-stats.tsv``` files containing performance for different metrics and partitions.
 
 ## References
-...
+```
+@inproceedings{periti2024trotr,
+    title = {{TRoTR: A Framework for Evaluating the Re-contextualization of Text Reuse}},
+    author = "Periti, Francesco  and Cassotti, Pierluigi  and Montanelli, Stefano  and Tahmasebi, Nina  and Schlechtweg, Dominik",
+    editor = "Al-Onaizan, Yaser  and Bansal, Mohit  and Chen, Yun-Nung",
+    booktitle = "Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2024",
+    address = "Miami, Florida, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.emnlp-main.774",
+    pages = "13972--13990",
+}
+```
